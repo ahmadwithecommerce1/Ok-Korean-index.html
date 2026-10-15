@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OK Korean Language Centre | OEC Work & Study Visa Experts</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        koreaNavy: '#0F172A',
+                        koreaRed: '#DC2626',
+                        koreaBlue: '#2563EB',
+                        accentGold: '#F59E0B',
+                        accentTeal: '#0D9488'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        korean: ['Noto Sans KR', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS Animations & Glassmorphism -->
+    <style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-panel {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .animated-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #1e3a8a, #dc2626);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.25;
+            animation: floatUp linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.4; }
+            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans">
+
+    <!-- Floating Particles Container -->
+    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- Top Bar -->
+    <div class="bg-slate-950 text-slate-300 text-xs py-2 px-4 border-b border-slate-800 relative z-20">
+        <div class="max-w-7xl mx-mx-auto flex flex-wrap justify-between items-center gap-2 container">
+            <div class="flex items-center gap-4">
+                <span><i class="fa-solid fa-phone text-koreaRed mr-1"></i> +92 300 1234567</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-envelope text-koreaBlue mr-1"></i> info@okkorean.edu.pk</span>
+                <span class="hidden lg:inline"><i class="fa-solid fa-location-dot text-accentGold mr-1"></i> Main Boulevard, Lahore / Islamabad</span>
+            </div>
+            <div class="flex items-center gap-3">
+                <!-- Admin Lead Drawer Toggle -->
+                <button onclick="toggleAdminDrawer()" class="hover:text-accentGold text-xs flex items-center gap-1 bg-slate-800 px-2 py-1 rounded">
+                    <i class="fa-solid fa-user-shield text-accentGold"></i> Admin Leads (<span id="lead-count-badge">0</span>)
+                </button>
+                
+                <!-- Dark Mode Toggle -->
+                <button onclick="toggleDarkMode()" class="p-1 rounded bg-slate-800 hover:text-amber-400 transition">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+
+                <!-- Language Selector Dropdown -->
+                <select id="lang-switcher" class="bg-slate-800 text-slate-200 text-xs rounded px-1 py-0.5 outline-none cursor-pointer">
+                    <option value="en">English</option>
+                    <option value="ur">اردو (Urdu)</option>
+                    <option value="kr">한국어 (Korean)</option>
+                </select>
+
+                <!-- WhatsApp Quick Chat -->
+                <a href="https://wa.me/923001234567" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-full text-xs font-semibold flex items-center gap-1 transition">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-koreaRed rounded-full flex items-center justify-center text-white font-extrabold text-2xl shadow-lg ring-2 ring-koreaNavy">
+                        <span class="font-korean">OK</span>
+                    </div>
+                    <div>
+                        <a href="#" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1">
+                            OK Korean <span class="text-koreaRed">Language Centre</span>
+                        </a>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">OEC Work Visa & South Korea Study Visa Experts</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center space-x-8 font-medium text-sm">
+                    <a href="#hero" class="hover:text-koreaRed transition">Home</a>
+                    <a href="#services" class="hover:text-koreaRed transition">Visa Programs</a>
+                    <a href="#calculator" class="hover:text-koreaRed transition">Visa Estimator</a>
+                    <a href="#quiz" class="hover:text-koreaRed transition">EPS Quiz Tool</a>
+                    <a href="#stats" class="hover:text-koreaRed transition">Success Rate</a>
+                    <a href="#testimonials" class="hover:text-koreaRed transition">Reviews</a>
+                    <button onclick="openModal()" class="bg-gradient-to-r from-koreaRed to-rose-700 hover:from-rose-700 hover:to-koreaRed text-white px-5 py-2.5 rounded-full shadow-lg hover:shadow-red-500/30 transition-all font-semibold glow-hover">
+                        Apply Online <i class="fa-solid fa-paper-plane ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-700 dark:text-slate-200 text-2xl focus:outline-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Home</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Visa Programs</a>
+            <a href="#calculator" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Visa Estimator</a>
+            <a href="#quiz" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">EPS Quiz Tool</a>
+            <a href="#stats" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Success Rate</a>
+            <button onclick="toggleMobileMenu(); openModal();" class="w-full mt-2 bg-koreaRed text-white py-3 rounded-xl font-semibold">
+                Apply Online
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative animated-bg text-white py-24 lg:py-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-accentGold text-sm font-semibold">
+                        <i class="fa-solid fa-award"></i> Pakistan's #1 Rated EPS-TOPIK & Study Visa Prep Centre
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
+                        Your Gateway To <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-300 to-teal-300">South Korea</span>
+                    </h1>
+                    <p class="text-lg text-slate-200 max-w-xl mx-auto lg:mx-0">
+                        Specialized preparation for **OEC EPS-TOPIK E-9 Work Visa** and **D-2/D-4 South Korea Study Visas**. Expert native Korean language training, CBT practice tests, and end-to-end document guidance.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
+                        <button onclick="openModal()" class="bg-koreaRed hover:bg-rose-700 text-white text-lg font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-1 transition duration-200">
+                            Get Free Consultation <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </button>
+                        <a href="#calculator" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 text-lg font-semibold px-8 py-4 rounded-xl backdrop-blur-md transition">
+                            Calculate Visa Eligibility
+                        </a>
+                    </div>
+
+                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-white/10 text-center lg:text-left">
+                        <div>
+                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">98%+</p>
+                            <p class="text-xs text-slate-300">Exam Pass Rate</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">1,500+</p>
+                            <p class="text-xs text-slate-300">Students Sent to Korea</p>
+                        </div>
+                        <div>
+                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">10+ Yrs</p>
+                            <p class="text-xs text-slate-300">OEC Prep Excellence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Hero Graphic Card -->
+                <div class="relative">
+                    <div class="glass-panel p-8 rounded-3xl shadow-2xl text-slate-800 dark:text-white space-y-6 relative z-10 border border-white/20">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold uppercase tracking-wider text-koreaRed bg-red-100 dark:bg-red-900/40 px-3 py-1 rounded-full">Official OEC Curriculum</span>
+                            <span class="text-xs text-slate-400 font-korean">대한민국 비자 준비</span>
+                        </div>
+                        <h3 class="text-2xl font-bold">Comprehensive Visa Programs</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 flex items-start gap-4">
+                                <div class="bg-blue-600/20 text-blue-500 p-3 rounded-lg text-xl"><i class="fa-solid fa-briefcase"></i></div>
+                                <div>
+                                    <h4 class="font-bold">E-9 Work Visa (EPS-TOPIK)</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Computer Based Test (CBT), Skill Test & Medical Clearance guidance.</p>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 flex items-start gap-4">
+                                <div class="bg-emerald-600/20 text-emerald-500 p-3 rounded-lg text-xl"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <div>
+                                    <h4 class="font-bold">D-2 & D-4 Study Visas</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">Bachelor/Master programs, scholarship guidance & embassy interviews.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs flex items-center justify-between">
+                            <span><i class="fa-solid fa-clock mr-1"></i> New Batch Starts Monday!</span>
+                            <button onclick="openModal()" class="font-bold underline hover:text-amber-500">Reserve Seat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services & Visa Programs -->
+    <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <h2 class="text-xs uppercase font-extrabold text-koreaRed tracking-widest mb-2">Our Core Expertise</h2>
+            <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Structured Courses for Korean Work & Study Visas</p>
+            <p class="text-slate-600 dark:text-slate-400 mt-3">From beginner Korean language classes to specialized OEC EPS-TOPIK exam drills and university admissions.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Card 1: EPS-TOPIK -->
+            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-koreaRed transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 bg-red-100 dark:bg-red-950 text-koreaRed rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fa-solid fa-passport"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">EPS-TOPIK Work Visa Prep</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Designed for candidates applying through the Overseas Employment Corporation (OEC) for South Korea E-9 government work permits.</p>
+                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> CBT Exam Simulation Software</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> 2000+ Korean Vocabulary Drill</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Physical Skill Test Preparation</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('EPS-TOPIK Work Visa')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-koreaRed py-3 rounded-xl font-semibold transition">
+                    Enroll For Work Visa
+                </button>
+            </div>
+
+            <!-- Card 2: Study Visa -->
+            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-koreaBlue transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-950 text-koreaBlue rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">South Korea Study Visa (D-2/D-4)</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Complete admissions assistance for top Korean universities with GKS Scholarship guidance and embassy file prep.</p>
+                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> University Application & SOP</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Bank Statement Guidance</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> TOPIK Level 2 / 3 / 4 Fast Track</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('Study Visa South Korea')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-koreaBlue py-3 rounded-xl font-semibold transition">
+                    Apply For Study Visa
+                </button>
+            </div>
+
+            <!-- Card 3: Spoken & Business Korean -->
+            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-accentGold transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 bg-amber-100 dark:bg-amber-950 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Spoken & General Korean</h3>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Interactive conversational Korean courses for job seekers, spouses, and business professionals seeking fluency in Hangul.</p>
+                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Native Speaker Pronunciation</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Practical Daily Conversation</li>
+                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Flexible Morning/Evening Classes</li>
+                    </ul>
+                </div>
+                <button onclick="openModal('General Spoken Korean')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-accentGold py-3 rounded-xl font-semibold transition">
+                    Learn Spoken Korean
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Fee & Visa Eligibility Calculator -->
+    <section id="calculator" class="py-16 bg-slate-100 dark:bg-slate-800/50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-xs font-bold uppercase tracking-widest text-koreaBlue bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">Interactive Estimator</span>
+                    <h2 class="text-3xl font-extrabold mt-3">Calculate Visa Eligibility & Course Fee</h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Select your options below to get an instant cost and timeframe breakdown.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <!-- Visa Category -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-2">Target Visa Category</label>
+                        <select id="calc-visa" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
+                            <option value="oec">OEC EPS-TOPIK (E-9 Work Visa)</option>
+                            <option value="study_d4">Study Visa (D-4 Language Course)</option>
+                            <option value="study_d2">Study Visa (D-2 Degree Program)</option>
+                        </select>
+                    </div>
+
+                    <!-- Education Level -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-2">Your Education Level</label>
+                        <select id="calc-edu" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
+                            <option value="matric">Matriculation / Secondary</option>
+                            <option value="intermediate">Intermediate / F.A / F.Sc</option>
+                            <option value="bachelor">Bachelor's Degree or Higher</option>
+                        </select>
+                    </div>
+
+                    <!-- Current Korean Level -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-2">Current Korean Level</label>
+                        <select id="calc-level" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
+                            <option value="zero">Absolute Beginner (Zero Knowledge)</option>
+                            <option value="basic">Can Read Hangul Characters</option>
+                            <option value="intermediate">Passed Basic TOPIK 1</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Estimation Output Box -->
+                <div class="bg-slate-900 text-white p-6 rounded-2xl grid md:grid-cols-4 gap-6 text-center">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Eligibility Score</p>
+                        <p id="est-score" class="text-2xl font-extrabold text-emerald-400 mt-1">95% High</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Recommended Duration</p>
+                        <p id="est-duration" class="text-2xl font-extrabold text-amber-400 mt-1">3 Months</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Est. Tuition Fee</p>
+                        <p id="est-fee" class="text-2xl font-extrabold text-koreaBlue dark:text-blue-400 mt-1">PKR 35,000</p>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button onclick="openModal()" class="w-full bg-koreaRed hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition">
+                            Book Assessment
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EPS-TOPIK Mini Quiz / Vocabulary Tool -->
+    <section id="quiz" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-koreaRed bg-red-100 dark:bg-red-950 px-3 py-1 rounded-full">Interactive Practice Tool</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4">Test Your EPS-TOPIK Vocabulary Skills</h2>
+                <p class="text-slate-600 dark:text-slate-400 mt-4">
+                    Try this quick interactive tool to practice Korean words commonly featured in the official OEC CBT examination.
+                </p>
+                
+                <div class="mt-6 space-y-4 text-sm">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-koreaRed text-lg"></i>
+                        <span>Includes real EPS-TOPIK picture and word match formats.</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-koreaRed text-lg"></i>
+                        <span>Instant score feedback with full explanations.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Card Widget -->
+            <div class="glass-panel p-8 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-xs font-bold uppercase text-slate-500">Korean Vocabulary Practice</span>
+                    <span id="quiz-progress" class="text-xs font-bold text-koreaRed bg-red-100 dark:bg-red-950 px-2.5 py-1 rounded-full">Question 1 of 3</span>
+                </div>
+
+                <div id="quiz-box">
+                    <h3 id="quiz-question" class="text-2xl font-bold font-korean mb-6 text-center text-koreaNavy dark:text-accentGold">
+                        안녕하세요 (An-nyeong-ha-se-yo)
+                    </h3>
+
+                    <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                        <!-- Dynamic Buttons inserted by JS -->
+                    </div>
+
+                    <div id="quiz-feedback" class="mt-4 p-3 rounded-xl text-center text-sm font-semibold hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Testimonials -->
+    <section id="testimonials" class="py-20 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs font-bold uppercase tracking-widest text-accentGold">Success Stories</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2">What Our Students Say</h2>
+                <p class="text-slate-400 mt-2">Real visa approvals and success stories from OK Korean Language Centre alumni.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
+                            MA
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Muhammad Ali</h4>
+                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> E-9 Work Visa Issued</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-300 italic">"I passed my EPS-TOPIK CBT exam with 185/200 score on my first attempt! OK Korean Centre's computer lab tests made the real OEC exam feel super easy."</p>
+                </div>
+
+                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
+                            ZF
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Zainab Fatima</h4>
+                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> D-2 Bachelor Student</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-300 italic">"Got my South Korea study visa for Hanyang University with scholarship. Their team guided me through document attestation and embassy interview preparation!"</p>
+                </div>
+
+                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
+                            UR
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Usman Raza</h4>
+                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> E-9 Skilled Worker</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-slate-300 italic">"Best institute in Pakistan for Korean language. Highly disciplined environment and excellent teachers who focus on real conversational skills."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact Section -->
+    <footer id="contact" class="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+            <div>
+                <div class="flex items-center gap-2 text-white font-bold text-xl mb-4">
+                    <span class="w-8 h-8 bg-koreaRed rounded-full flex items-center justify-center text-sm font-korean">OK</span>
+                    OK Korean Language Centre
+                </div>
+                <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                    Pakistan's premier institute for OEC South Korea Work Visa (E-9) EPS-TOPIK Preparation & D-2 / D-4 Study Visas.
+                </p>
+                <div class="flex space-x-3 text-lg">
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-whatsapp text-emerald-500"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#hero" class="hover:text-white transition">Home</a></li>
+                    <li><a href="#services" class="hover:text-white transition">EPS-TOPIK Work Visa</a></li>
+                    <li><a href="#services" class="hover:text-white transition">South Korea Study Visa</a></li>
+                    <li><a href="#calculator" class="hover:text-white transition">Visa Estimator</a></li>
+                    <li><a href="#quiz" class="hover:text-white transition">Online Vocabulary Quiz</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact Info</h4>
+                <ul class="space-y-3 text-xs">
+                    <li><i class="fa-solid fa-location-dot text-koreaRed mr-2"></i> Main Campus: Gulberg III, Lahore, Pakistan</li>
+                    <li><i class="fa-solid fa-phone text-koreaBlue mr-2"></i> +92 300 1234567 / +92 42 35712345</li>
+                    <li><i class="fa-solid fa-envelope text-accentGold mr-2"></i> admissions@okkorean.edu.pk</li>
+                    <li><i class="fa-solid fa-clock text-emerald-500 mr-2"></i> Mon - Sat: 9:00 AM - 7:00 PM</li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Campus Location</h4>
+                <div class="w-full h-32 rounded-xl overflow-hidden bg-slate-800 relative">
+                    <iframe class="w-full h-full border-0 grayscale opacity-80 hover:opacity-100 transition" 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108832.08018247065!2d74.24372221295353!3d31.520369599553765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1680000000000" 
+                            allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
+            <p>© 2026 OK Korean Language Centre. All Rights Reserved.</p>
+            <p class="mt-2 sm:mt-0 font-korean">한국어 교육 및 비자 전문 센터</p>
+        </div>
+    </footer>
+
+    <!-- Modal: Online Registration & Admission Form -->
+    <div id="admission-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+        <div class="glass-panel max-w-lg w-full p-8 rounded-3xl shadow-2xl relative border border-white/20 dark:border-slate-700 animate-fadeIn">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold uppercase text-koreaRed bg-red-100 dark:bg-red-950 px-3 py-1 rounded-full">Apply Online</span>
+                <h3 class="text-2xl font-bold mt-2">Student Registration</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Fill in your details to reserve your seat for the upcoming batch.</p>
+            </div>
+
+            <form id="registration-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase mb-1">Full Name</label>
+                    <input type="text" id="student-name" required placeholder="e.g. Muhammad Ahmad" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1">WhatsApp / Phone</label>
+                        <input type="tel" id="student-phone" required placeholder="03001234567" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1">CNIC Number</label>
+                        <input type="text" id="student-cnic" required placeholder="35202-XXXXXXX-X" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1">Preferred Visa Program</label>
+                        <select id="student-program" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                            <option value="EPS-TOPIK Work Visa">EPS-TOPIK Work Visa (E-9)</option>
+                            <option value="South Korea Study Visa">South Korea Study Visa (D-2/D-4)</option>
+                            <option value="General Spoken Korean">Spoken & General Korean</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase mb-1">Preferred Shift</label>
+                        <select id="student-shift" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
+                            <option value="Morning Shift (9 AM - 12 PM)">Morning Shift</option>
+                            <option value="Evening Shift (4 PM - 7 PM)">Evening Shift</option>
+                            <option value="Online Virtual Class">Online Virtual Class</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-koreaRed to-rose-700 text-white font-bold py-3.5 rounded-xl text-base shadow-lg hover:shadow-red-500/30 transition mt-4">
+                    Submit Application <i class="fa-solid fa-check ml-1"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Leads Drawer (Backend Simulation) -->
+    <div id="admin-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-database text-koreaBlue"></i> Saved Student Leads
+                </h3>
+                <button onclick="toggleAdminDrawer()" class="text-slate-400 hover:text-white text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <p class="text-xs text-slate-500 mt-2 mb-4">Leads dynamically saved in browser `localStorage` simulated database.</p>
+
+            <div id="lead-list" class="space-y-3 max-h-[70vh] overflow-y-auto pr-1">
+                <!-- Lead cards inserted dynamically -->
+            </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
+            <button onclick="clearLeads()" class="w-full bg-red-600/20 text-red-500 hover:bg-red-600 hover:text-white py-2.5 rounded-xl text-xs font-bold transition">
+                Clear All Leads
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript Functional Logic -->
+    <script>
+        // --- 1. Floating Particles Initialization ---
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 20;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'floating-particle bg-red-500';
+                const size = Math.random() * 8 + 4;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100 + 100}%`;
+                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // --- 2. Dark/Light Mode Toggle ---
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            const themeIcon = document.getElementById('theme-icon');
+            if (document.documentElement.classList.contains('dark')) {
+                themeIcon.className = 'fa-solid fa-sun';
+            } else {
+                themeIcon.className = 'fa-solid fa-moon';
+            }
+        }
+
+        // --- 3. Mobile Menu Toggle ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // --- 4. Modal Controls ---
+        function openModal(programName = '') {
+            if (programName) {
+                document.getElementById('student-program').value = programName;
+            }
+            document.getElementById('admission-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('admission-modal').classList.add('hidden');
+        }
+
+        // --- 5. Interactive Visa & Fee Calculator ---
+        function calculateVisaEstimate() {
+            const visa = document.getElementById('calc-visa').value;
+            const edu = document.getElementById('calc-edu').value;
+            const level = document.getElementById('calc-level').value;
+
+            let score = "90% High";
+            let duration = "3 Months";
+            let fee = "PKR 35,000";
+
+            if (visa === 'oec') {
+                fee = "PKR 35,000";
+                duration = level === 'zero' ? "3 Months" : "1.5 Months";
+                score = edu === 'matric' ? "95% Eligible" : "98% Eligible";
+            } else if (visa === 'study_d4') {
+                fee = "PKR 45,000";
+                duration = "4 Months";
+                score = "92% Eligible";
+            } else if (visa === 'study_d2') {
+                fee = "PKR 60,000";
+                duration = "6 Months";
+                score = (edu === 'intermediate' || edu === 'bachelor') ? "96% High Eligibility" : "Requirements Pending";
+            }
+
+            document.getElementById('est-score').innerText = score;
+            document.getElementById('est-duration').innerText = duration;
+            document.getElementById('est-fee').innerText = fee;
+        }
+
+        // --- 6. EPS-TOPIK Vocabulary Practice Quiz Tool ---
+        const quizData = [
+            {
+                question: "안녕하세요 (An-nyeong-ha-se-yo)",
+                options: ["Thank You", "Hello / Good Day", "Goodbye", "Excuse Me"],
+                correct: 1,
+                explanation: "안녕하세요 is the standard Korean greeting for 'Hello'."
+            },
+            {
+                question: "감사합니다 (Gam-sa-ham-ni-da)",
+                options: ["Sorry", "Welcome", "Thank You", "Yes"],
+                correct: 2,
+                explanation: "감사합니다 means 'Thank You' in polite formal Korean."
+            },
+            {
+                question: "선생님 (Seon-saeng-nim)",
+                options: ["Student", "Doctor", "Teacher", "Manager"],
+                correct: 2,
+                explanation: "선생님 translates to 'Teacher' or respected instructor."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+
+        function loadQuizQuestion() {
+            const current = quizData[currentQuizIndex];
+            document.getElementById('quiz-question').innerText = current.question;
+            document.getElementById('quiz-progress').innerText = `Question ${currentQuizIndex + 1} of ${quizData.length}`;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            document.getElementById('quiz-feedback').classList.add('hidden');
+
+            current.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium transition flex items-center justify-between text-sm';
+                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
+                btn.onclick = () => checkQuizAnswer(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkQuizAnswer(selectedIdx) {
+            const current = quizData[currentQuizIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+
+            if (selectedIdx === current.correct) {
+                feedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+                feedback.innerText = "✓ Correct! " + current.explanation;
+            } else {
+                feedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-semibold bg-red-500/20 text-red-400 border border-red-500/30";
+                feedback.innerText = "✗ Incorrect! " + current.explanation;
+            }
+
+            setTimeout(() => {
+                currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
+                loadQuizQuestion();
+            }, 3000);
+        }
+
+        loadQuizQuestion();
+
+        // --- 7. Full-Stack Local Database Simulation (Student Leads) ---
+        function getLeads() {
+            return JSON.parse(localStorage.getItem('ok_korean_leads') || '[]');
+        }
+
+        function updateLeadBadge() {
+            const leads = getLeads();
+            document.getElementById('lead-count-badge').innerText = leads.length;
+        }
+
+        function renderLeads() {
+            const leads = getLeads();
+            const listContainer = document.getElementById('lead-list');
+            listContainer.innerHTML = '';
+
+            if (leads.length === 0) {
+                listContainer.innerHTML = `<p class="text-slate-500 text-xs text-center py-8">No registered leads found.</p>`;
+                return;
+            }
+
+            leads.forEach((lead, index) => {
+                const item = document.createElement('div');
+                item.className = 'p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs space-y-1 border border-slate-200 dark:border-slate-700';
+                item.innerHTML = `
+                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
+                        <span>${lead.name}</span>
+                        <span class="text-koreaRed">${lead.program}</span>
+                    </div>
+                    <div class="text-slate-500"><i class="fa-solid fa-phone mr-1"></i> ${lead.phone} | CNIC: ${lead.cnic}</div>
+                    <div class="text-slate-400"><i class="fa-solid fa-clock mr-1"></i> ${lead.shift}</div>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const newLead = {
+                name: document.getElementById('student-name').value,
+                phone: document.getElementById('student-phone').value,
+                cnic: document.getElementById('student-cnic').value,
+                program: document.getElementById('student-program').value,
+                shift: document.getElementById('student-shift').value,
+                timestamp: new Date().toLocaleString()
+            };
+
+            const leads = getLeads();
+            leads.unshift(newLead);
+            localStorage.setItem('ok_korean_leads', JSON.stringify(leads));
+
+            updateLeadBadge();
+            renderLeads();
+            closeModal();
+            document.getElementById('registration-form').reset();
+
+            alert('🎉 Application Submitted Successfully! Our admissions team will contact you shortly.');
+        }
+
+        function toggleAdminDrawer() {
+            const drawer = document.getElementById('admin-drawer');
+            drawer.classList.toggle('translate-x-full');
+            renderLeads();
+        }
+
+        function clearLeads() {
+            if (confirm('Are you sure you want to clear all stored student leads?')) {
+                localStorage.removeItem('ok_korean_leads');
+                updateLeadBadge();
+                renderLeads();
+            }
+        }
+
+        // Initialize Lead Counter on Page Load
+        updateLeadBadge();
+    </script>
+</body>
+</html>
