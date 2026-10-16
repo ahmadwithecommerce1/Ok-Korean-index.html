@@ -1,833 +1,2212 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OK Korean Language Centre | OEC Work & Study Visa Experts</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        koreaNavy: '#0F172A',
-                        koreaRed: '#DC2626',
-                        koreaBlue: '#2563EB',
-                        accentGold: '#F59E0B',
-                        accentTeal: '#0D9488'
-                    },
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                        korean: ['Noto Sans KR', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0d0f0e" />
 
-    <!-- Google Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!--
+  ============================================================
+  OK KOREAN LANGUAGE CENTRE — PHASE 1 FRONTEND (v2)
+  ============================================================
 
-    <!-- Custom CSS Animations & Glassmorphism -->
-    <style>
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .dark .glass-panel {
-            background: rgba(15, 23, 42, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .animated-bg {
-            background: linear-gradient(-45deg, #0f172a, #1e293b, #1e3a8a, #dc2626);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
+  ⚠️  PLACEHOLDER CONTENT — MUST BE REPLACED BEFORE LAUNCH
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+  Nothing below is a verified business fact. Replace every
+  item marked with {{ }} or [ ... ] using real information
+  supplied by the client:
 
-        .floating-particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.25;
-            animation: floatUp linear infinite;
-        }
+    {{PHONE}}          official phone number
+    {{WHATSAPP}}       official WhatsApp number
+    {{EMAIL}}          official email address
+    {{ADDRESS}}        physical address
+    {{CITY}}           city
+    {{HOURS}}          opening hours
+    {{COURSE_1..4}}    real course names & descriptions
+    {{FEE_NOTE}}       fee policy (or delete the block)
+    {{AFFILIATION}}    only if officially verifiable
+    {{SOCIAL_*}}       social profile URLs
+    {{LEGAL_ENTITY}}   registered entity name for footer
 
-        @keyframes floatUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.4; }
-            100% { transform: translateY(-800px) rotate(360deg); opacity: 0; }
-        }
+  v2 additions:
+    - Custom cursor (dot + ring) — desktop only
+    - Hero particle canvas
+    - Button ripple effect
+    - Card 3D tilt + radial cursor glow
+    - Split-text stagger + text scramble
+    - Konami easter egg (↑↑↓↓←→←→BA)
+    - Scroll-direction detection
+    - 70 total animations, all reduced-motion aware
 
-        .glow-hover:hover {
-            box-shadow: 0 0 25px rgba(220, 38, 38, 0.5);
-        }
-    </style>
+  Do NOT publish until a human has replaced all placeholders.
+  ============================================================
+-->
+
+<title>OK Korean Language Centre — Learn Korean in Pakistan</title>
+<meta name="description" content="Korean language courses in Pakistan. Structured classes from beginner foundations through TOPIK preparation. [Replace this meta description with verified copy.]" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   OK KOREAN LANGUAGE CENTRE — MASTER STYLESHEET (v2)
+   ============================================================ */
+
+/* ─── 1. DESIGN TOKENS ─────────────────────────────────────── */
+:root{
+  --ink:        #0d0f0e;
+  --ink-2:      #141816;
+  --ink-3:      #1c211e;
+  --hanji:      #f7f3ea;
+  --hanji-2:    #efe8db;
+  --celadon:    #7ba098;
+  --celadon-dp: #4a7268;
+  --celadon-lt: #a8c4bd;
+  --persimmon:  #c4553b;
+  --gold:       #c9a227;
+
+  --text:           var(--ink);
+  --text-muted:     #5c635e;
+  --text-inv:       var(--hanji);
+  --text-inv-muted: rgba(247,243,234,.62);
+
+  --line:     rgba(13,15,14,.12);
+  --line-inv: rgba(247,243,234,.14);
+
+  --f-display: clamp(2.6rem, 7.5vw, 6.2rem);
+  --f-h1:      clamp(2.1rem, 5vw, 3.6rem);
+  --f-h2:      clamp(1.65rem, 3.6vw, 2.6rem);
+  --f-h3:      clamp(1.15rem, 2vw, 1.45rem);
+  --f-body:    clamp(0.98rem, 1.05vw, 1.075rem);
+  --f-small:   0.82rem;
+  --f-micro:   0.72rem;
+
+  --sp-1: .5rem;  --sp-2: 1rem;  --sp-3: 1.5rem;
+  --sp-4: 2rem;   --sp-5: 3rem;  --sp-6: 4.5rem;
+  --sp-7: 6rem;   --sp-8: 8.5rem;
+
+  --gutter: clamp(1.15rem, 4.5vw, 3.5rem);
+  --maxw:   1320px;
+
+  --r-sm: 4px;  --r-md: 10px;  --r-lg: 18px;  --r-full: 999px;
+
+  --ease-out:    cubic-bezier(.22,.61,.36,1);
+  --ease-io:     cubic-bezier(.65,.05,.36,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+
+  --header-h: 76px;
+}
+
+/* ─── 2. RESET ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 20px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  font-family:'Manrope',system-ui,-apple-system,sans-serif;
+  font-size:var(--f-body);
+  line-height:1.65;
+  color:var(--text);
+  background:var(--hanji);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  text-rendering:optimizeLegibility;
+}
+img,svg,video,canvas{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,textarea,select{font:inherit;color:inherit}
+button{background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+ul,ol{list-style:none}
+:focus-visible{outline:2px solid var(--persimmon);outline-offset:3px;border-radius:2px}
+::selection{background:var(--celadon-dp);color:var(--hanji)}
+
+/* ─── 3. TYPOGRAPHY HELPERS ───────────────────────────────── */
+.display{font-family:'Fraunces',Georgia,serif;font-weight:400;line-height:1.02;letter-spacing:-.02em}
+.kr{font-family:'Noto Serif KR',serif;font-weight:400}
+.eyebrow{
+  font-size:var(--f-micro);letter-spacing:.22em;text-transform:uppercase;
+  font-weight:600;color:var(--celadon-dp);display:inline-block;
+}
+.lede{font-size:clamp(1.05rem,1.6vw,1.28rem);line-height:1.6;color:var(--text-muted);max-width:60ch}
+
+/* ─── 4. LAYOUT ───────────────────────────────────────────── */
+.wrap{width:100%;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--gutter)}
+section{position:relative}
+.section-pad{padding-block:clamp(3.5rem,9vw,var(--sp-8))}
+
+/* ─── 5. CINEMATIC INTRO OVERLAY [ANIM 01-03] ─────────────── */
+#intro{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--ink);
+  display:grid;place-items:center;
+  transition:opacity .7s var(--ease-out), visibility .7s;
+}
+#intro.done{opacity:0;visibility:hidden}
+#intro .intro-mark{
+  font-family:'Fraunces',serif;
+  color:var(--hanji);
+  font-size:clamp(1.4rem,3.2vw,2.1rem);
+  letter-spacing:.05em;
+  opacity:0;transform:translateY(14px);
+  animation:introMark .9s var(--ease-out) .15s forwards;
+}
+#intro .intro-kr{
+  position:absolute;bottom:clamp(1.5rem,5vw,3rem);
+  color:rgba(247,243,234,.25);
+  font-size:var(--f-micro);letter-spacing:.4em;text-transform:uppercase;
+  opacity:0;animation:introFade .8s var(--ease-out) .6s forwards;
+}
+#intro .intro-bar{
+  position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  height:2px;width:0;background:var(--persimmon);
+  animation:introBar 1.3s var(--ease-io) .25s forwards;
+}
+@keyframes introMark{to{opacity:1;transform:translateY(0)}}
+@keyframes introFade{to{opacity:1}}
+@keyframes introBar{to{width:100%}}
+
+/* ─── 6. SCROLL PROGRESS [ANIM 04] ────────────────────────── */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:linear-gradient(90deg,var(--celadon-dp),var(--persimmon));
+  z-index:1000;transition:width .1s linear;pointer-events:none;
+}
+
+/* ─── 7. HEADER & NAV [ANIM 05-09] ────────────────────────── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:var(--header-h);
+  display:flex;align-items:center;
+  transition:background .45s var(--ease-out),
+             height .45s var(--ease-out),
+             box-shadow .45s var(--ease-out),
+             backdrop-filter .45s var(--ease-out);
+  will-change:transform;
+}
+header.scrolled{
+  height:64px;
+  background:rgba(247,243,234,.86);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 1px 0 var(--line);
+}
+header .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3)}
+
+.brand{display:flex;align-items:center;gap:.7rem;flex-shrink:0}
+.brand-mark{
+  width:38px;height:38px;border-radius:50%;
+  background:var(--ink);color:var(--hanji);
+  display:grid;place-items:center;
+  font-family:'Noto Serif KR',serif;font-size:1.05rem;
+  transition:transform .5s var(--ease-spring), background .35s var(--ease-out);
+  flex-shrink:0;
+}
+.brand:hover .brand-mark{transform:rotate(-8deg) scale(1.06)}
+header.scrolled .brand-mark{background:var(--celadon-dp)}
+.brand-text{display:flex;flex-direction:column;line-height:1.15}
+.brand-name{font-family:'Fraunces',serif;font-size:1rem;letter-spacing:-.01em}
+.brand-sub{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted)}
+
+nav.desk{display:none}
+@media(min-width:1024px){
+  nav.desk{display:block}
+  #ctaDesk{display:inline-flex !important}
+}
+nav.desk ul{display:flex;align-items:center;gap:clamp(1rem,2.2vw,2.1rem)}
+nav.desk a{position:relative;font-size:.88rem;font-weight:500;padding-block:.35rem}
+nav.desk a::after{
+  content:'';position:absolute;left:0;bottom:0;height:1px;width:100%;
+  background:var(--persimmon);
+  transform:scaleX(0);transform-origin:right;
+  transition:transform .4s var(--ease-out);
+}
+nav.desk a:hover::after,
+nav.desk a[aria-current="page"]::after{transform:scaleX(1);transform-origin:left}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:.72rem 1.35rem;border-radius:var(--r-full);
+  font-size:.85rem;font-weight:600;letter-spacing:.01em;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:color .35s var(--ease-out), border-color .35s var(--ease-out), transform .35s var(--ease-out);
+  white-space:nowrap;cursor:pointer;
+}
+.btn::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:var(--persimmon);
+  transform:translateY(101%);
+  transition:transform .45s var(--ease-io);
+}
+.btn:hover::before{transform:translateY(0)}
+.btn-solid{background:var(--ink);color:var(--hanji)}
+.btn-solid:hover{color:var(--hanji)}
+.btn-ghost{border:1px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{color:var(--hanji);border-color:var(--persimmon)}
+.btn .arw{transition:transform .4s var(--ease-spring)}
+.btn:hover .arw{transform:translateX(4px)}
+.btn-sm{padding:.55rem 1.05rem;font-size:.79rem}
+
+.burger{
+  width:44px;height:44px;display:grid;place-items:center;
+  border-radius:50%;border:1px solid var(--line);
+  transition:border-color .3s var(--ease-out), background .3s var(--ease-out);
+}
+@media(min-width:1024px){.burger{display:none}}
+.burger:hover{border-color:var(--celadon-dp)}
+.burger span{
+  display:block;width:17px;height:1.5px;background:var(--ink);
+  transition:transform .4s var(--ease-io), opacity .3s var(--ease-out), background .3s var(--ease-out);
+}
+.burger span+span{margin-top:5px}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0;transform:scaleX(.4)}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+
+/* ─── 8. MOBILE DRAWER [ANIM 10-13] ───────────────────────── */
+#drawer{
+  position:fixed;inset:0;z-index:950;
+  background:var(--ink);
+  clip-path:circle(0% at calc(100% - 46px) 46px);
+  transition:clip-path .75s var(--ease-io), visibility .75s;
+  display:flex;flex-direction:column;
+  padding:calc(var(--header-h) + 1.5rem) var(--gutter) 2.5rem;
+  visibility:hidden;
+}
+#drawer.open{clip-path:circle(150% at calc(100% - 46px) 46px);visibility:visible}
+#drawer nav{margin-top:auto;margin-bottom:auto}
+#drawer nav ul{display:flex;flex-direction:column;gap:.35rem}
+#drawer nav li{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .5s var(--ease-out), transform .5s var(--ease-out);
+}
+#drawer.open nav li{opacity:1;transform:translateY(0)}
+#drawer.open nav li:nth-child(1){transition-delay:.18s}
+#drawer.open nav li:nth-child(2){transition-delay:.24s}
+#drawer.open nav li:nth-child(3){transition-delay:.30s}
+#drawer.open nav li:nth-child(4){transition-delay:.36s}
+#drawer.open nav li:nth-child(5){transition-delay:.42s}
+#drawer.open nav li:nth-child(6){transition-delay:.48s}
+#drawer nav a{
+  font-family:'Fraunces',serif;font-size:clamp(1.85rem,8vw,2.6rem);
+  color:var(--hanji);display:inline-flex;align-items:baseline;gap:.6rem;
+  padding-block:.4rem;line-height:1.15;
+  transition:color .3s var(--ease-out);
+}
+#drawer nav a .idx{
+  font-family:'Manrope',sans-serif;font-size:.6rem;font-weight:600;
+  color:var(--celadon);letter-spacing:.15em;
+}
+#drawer nav a:active,#drawer nav a:hover{color:var(--celadon-lt)}
+.drawer-foot{
+  margin-top:auto;padding-top:2rem;border-top:1px solid var(--line-inv);
+  color:var(--text-inv-muted);font-size:.8rem;line-height:1.7;
+}
+.drawer-foot strong{color:var(--hanji);font-weight:600;display:block;margin-bottom:.35rem}
+
+/* ─── 9. HERO [ANIM 14-22] ────────────────────────────────── */
+.hero{
+  min-height:100svh;
+  padding-top:calc(var(--header-h) + clamp(2rem,7vw,5rem));
+  padding-bottom:clamp(3rem,7vw,5rem);
+  display:flex;flex-direction:column;justify-content:center;
+  background:var(--hanji);
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:-20%;
+  background:
+    radial-gradient(48% 42% at 78% 22%, rgba(123,160,152,.30) 0%, transparent 62%),
+    radial-gradient(42% 38% at 14% 78%, rgba(196,85,59,.16) 0%, transparent 60%),
+    radial-gradient(60% 50% at 50% 50%, rgba(201,162,39,.07) 0%, transparent 70%);
+  animation:bgDrift 22s ease-in-out infinite alternate;
+  pointer-events:none;
+  will-change:transform;
+}
+@keyframes bgDrift{
+  0%{transform:scale(1) translate(0,0)}
+  50%{transform:scale(1.08) translate(-2%,1.5%)}
+  100%{transform:scale(1.02) translate(2%,-1%)}
+}
+.hero-grain{
+  position:absolute;inset:0;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+}
+#hero-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;opacity:.9;
+}
+@media(hover:hover) and (pointer:fine){#hero-canvas{pointer-events:auto}}
+.hero .wrap{position:relative;z-index:2;width:100%}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.7rem;
+  margin-bottom:clamp(1.2rem,3vw,2rem);
+  opacity:0;transform:translateY(18px);
+  animation:riseIn .9s var(--ease-out) .35s forwards;
+}
+.hero-eyebrow .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--persimmon);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+
+.hero h1{
+  font-size:var(--f-display);
+  max-width:16ch;
+  margin-bottom:clamp(1.4rem,3vw,2.2rem);
+}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .line > span{
+  display:block;transform:translateY(105%);
+  animation:lineUp 1.05s var(--ease-io) forwards;
+}
+.hero h1 .line:nth-child(1) > span{animation-delay:.5s}
+.hero h1 .line:nth-child(2) > span{animation-delay:.62s}
+.hero h1 .line:nth-child(3) > span{animation-delay:.74s}
+@keyframes lineUp{to{transform:translateY(0)}}
+.hero h1 em{
+  font-style:italic;color:var(--celadon-dp);position:relative;
+}
+.hero h1 em::after{
+  content:'';position:absolute;left:0;right:0;bottom:.06em;height:.09em;
+  background:var(--gold);opacity:.5;
+  transform:scaleX(0);transform-origin:left;
+  animation:underlineGrow 1s var(--ease-out) 1.5s forwards;
+}
+@keyframes underlineGrow{to{transform:scaleX(1)}}
+
+.hero-lede{opacity:0;transform:translateY(18px);animation:riseIn .9s var(--ease-out) .95s forwards}
+.hero-actions{
+  display:flex;flex-wrap:wrap;gap:.85rem;
+  margin-top:clamp(1.8rem,4vw,2.6rem);
+  opacity:0;transform:translateY(18px);
+  animation:riseIn .9s var(--ease-out) 1.1s forwards;
+}
+@keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+
+.hero-meta{
+  margin-top:clamp(2.5rem,6vw,4rem);
+  padding-top:1.5rem;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:1.4rem;opacity:0;
+  animation:riseIn .9s var(--ease-out) 1.3s forwards;
+}
+.hero-meta dt{
+  font-size:var(--f-micro);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:.3rem;
+}
+.hero-meta dd{font-family:'Fraunces',serif;font-size:1.05rem}
+
+.glyph{
+  position:absolute;font-family:'Noto Serif KR',serif;
+  color:var(--celadon-dp);opacity:.09;
+  pointer-events:none;user-select:none;z-index:1;
+  will-change:transform;
+}
+.glyph-1{top:14%;right:6%;font-size:clamp(6rem,14vw,13rem)}
+.glyph-2{bottom:12%;left:3%;font-size:clamp(4rem,9vw,8rem);opacity:.06}
+.glyph-3{top:52%;right:22%;font-size:clamp(2.5rem,5vw,4.5rem);opacity:.07}
+@media(max-width:767px){.glyph-1{font-size:7rem;top:8%}.glyph-2{display:none}.glyph-3{display:none}}
+
+.scroll-cue{
+  position:absolute;bottom:clamp(1.2rem,3vw,2rem);left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--text-muted);
+  opacity:0;animation:riseIn .8s var(--ease-out) 1.7s forwards;z-index:2;
+}
+.scroll-cue .track{width:1px;height:44px;background:var(--line);position:relative;overflow:hidden}
+.scroll-cue .track::after{
+  content:'';position:absolute;top:-50%;left:0;width:100%;height:50%;
+  background:var(--persimmon);animation:cueRun 2s var(--ease-io) infinite;
+}
+@keyframes cueRun{0%{top:-50%}100%{top:100%}}
+@media(max-height:640px){.scroll-cue{display:none}}
+
+/* ─── 10. MARQUEE [ANIM 23] ───────────────────────────────── */
+.marquee{
+  background:var(--ink);color:var(--hanji);
+  padding-block:.9rem;overflow:hidden;
+  border-block:1px solid rgba(247,243,234,.08);
+}
+.marquee-track{
+  display:flex;gap:2.5rem;width:max-content;
+  animation:scrollX 34s linear infinite;will-change:transform;
+}
+.marquee:hover .marquee-track{animation-play-state:paused}
+@keyframes scrollX{to{transform:translateX(-50%)}}
+.marquee-item{
+  display:inline-flex;align-items:center;gap:.9rem;
+  font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--text-inv-muted);white-space:nowrap;
+}
+.marquee-item .kr{color:var(--celadon-lt);letter-spacing:.05em;font-size:.85rem}
+
+/* ─── 11. SCROLL REVEAL [ANIM 24-25] ──────────────────────── */
+.js .reveal{opacity:0;transform:translateY(34px);transition:opacity .9s var(--ease-out), transform .9s var(--ease-out)}
+.js .reveal.in{opacity:1;transform:translateY(0)}
+.js .reveal-d1{transition-delay:.08s}
+.js .reveal-d2{transition-delay:.16s}
+.js .reveal-d3{transition-delay:.24s}
+.js .reveal-d4{transition-delay:.32s}
+.sec-head{max-width:58ch;margin-bottom:clamp(2rem,5vw,3.5rem)}
+.sec-head .eyebrow{display:block;margin-bottom:.9rem}
+.sec-head h2{font-size:var(--f-h2);margin-bottom:1rem}
+
+/* ─── 12. ABOUT [ANIM 26] ─────────────────────────────────── */
+.about-grid{display:grid;gap:clamp(2rem,5vw,4.5rem);grid-template-columns:1fr}
+@media(min-width:900px){.about-grid{grid-template-columns:1.05fr .95fr;align-items:center}}
+.about-media{
+  position:relative;aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(145deg,var(--ink-2),var(--celadon-dp));
+}
+.about-media .ph{
+  position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+  color:rgba(247,243,234,.5);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;
+  padding:2rem;line-height:1.8;
+}
+.js .about-media .mask{
+  position:absolute;inset:0;background:var(--hanji);
+  transform-origin:bottom;
+  transition:transform 1.1s var(--ease-io);z-index:2;
+}
+.js .about-media.in .mask{transform:scaleY(0)}
+.about-media .kr-tag{
+  position:absolute;top:1.25rem;left:1.25rem;z-index:3;
+  font-family:'Noto Serif KR',serif;color:var(--hanji);
+  font-size:.75rem;letter-spacing:.28em;
+  background:rgba(13,15,14,.42);backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  padding:.4rem .85rem;border-radius:var(--r-full);
+}
+.about-body p+p{margin-top:1.1rem}
+.about-body p{color:var(--text-muted)}
+.about-list{margin-top:2rem;display:grid;gap:1rem}
+.about-list li{
+  display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;
+  padding-top:1rem;border-top:1px solid var(--line);
+}
+.about-list .n{font-family:'Fraunces',serif;font-size:.8rem;color:var(--celadon-dp);padding-top:.15rem}
+.about-list strong{display:block;font-weight:600}
+
+/* ─── 13. COURSES [ANIM 27-31] ────────────────────────────── */
+.courses{background:var(--hanji-2)}
+.filters{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:clamp(1.8rem,4vw,2.8rem)}
+.filter{
+  padding:.5rem 1.05rem;border-radius:var(--r-full);
+  border:1px solid var(--line);font-size:.78rem;font-weight:500;
+  transition:background .35s var(--ease-out), color .35s var(--ease-out),
+             border-color .35s var(--ease-out), transform .3s var(--ease-out);
+}
+.filter:hover{border-color:var(--celadon-dp);transform:translateY(-2px)}
+.filter[aria-pressed="true"]{background:var(--ink);color:var(--hanji);border-color:var(--ink)}
+
+.course-grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+.card{
+  background:var(--hanji);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  padding:clamp(1.4rem,2.6vw,2rem);
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;isolation:isolate;
+  transition:transform .5s var(--ease-out),
+             box-shadow .5s var(--ease-out),
+             border-color .4s var(--ease-out),
+             opacity .45s var(--ease-out);
+  will-change:transform;
+}
+.card::before{
+  content:'';position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(160deg,rgba(123,160,152,.14),transparent 55%);
+  opacity:0;transition:opacity .5s var(--ease-out);
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 22px 44px -24px rgba(13,15,14,.32);border-color:var(--celadon)}
+.card:hover::before{opacity:1}
+.card:focus-within{transform:translateY(-4px);border-color:var(--celadon-dp)}
+.card.hide{opacity:0;transform:scale(.96);pointer-events:none;position:absolute;visibility:hidden}
+
+.card-glow{
+  position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;
+  transition:opacity .35s var(--ease-out);
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%), rgba(123,160,152,.20), transparent 72%);
+  z-index:0;
+}
+.card > *{position:relative;z-index:1}
+
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:1.2rem}
+.card-lvl{
+  font-size:var(--f-micro);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--celadon-dp);font-weight:600;
+}
+.card-kr{
+  font-family:'Noto Serif KR',serif;font-size:1.5rem;color:var(--ink);
+  opacity:.14;line-height:1;
+  transition:opacity .45s var(--ease-out), transform .6s var(--ease-out);
+}
+.card:hover .card-kr{opacity:.3;transform:translateY(-3px) rotate(-3deg)}
+.card h3{font-family:'Fraunces',serif;font-size:var(--f-h3);margin-bottom:.65rem;font-weight:500}
+.card p{color:var(--text-muted);font-size:.92rem;flex-grow:1}
+.card-foot{
+  margin-top:1.5rem;padding-top:1.1rem;border-top:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+}
+.card-foot .dur{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted)}
+.card-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.8rem;font-weight:600;color:var(--celadon-dp)}
+.card-link svg{transition:transform .4s var(--ease-spring)}
+.card:hover .card-link svg{transform:translateX(4px)}
+
+/* ─── 14. STATS [ANIM 32-33] ──────────────────────────────── */
+.stats{background:var(--ink);color:var(--hanji)}
+.stats .eyebrow{color:var(--celadon-lt)}
+.stats .sec-head h2{color:var(--hanji)}
+.stat-grid{
+  display:grid;gap:1px;background:var(--line-inv);
+  border:1px solid var(--line-inv);border-radius:var(--r-lg);overflow:hidden;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+}
+.stat{background:var(--ink);padding:clamp(1.6rem,3.4vw,2.6rem);transition:background .5s var(--ease-out)}
+.stat:hover{background:var(--ink-3)}
+.stat .num{
+  font-family:'Fraunces',serif;font-size:clamp(2.1rem,5vw,3.2rem);
+  line-height:1;color:var(--hanji);
+  display:flex;align-items:baseline;gap:.1em;
+}
+.stat .lbl{
+  margin-top:.8rem;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--text-inv-muted);
+}
+.stat-note{
+  margin-top:1.6rem;font-size:.78rem;color:var(--text-inv-muted);
+  border-left:2px solid var(--persimmon);padding-left:1rem;max-width:62ch;line-height:1.7;
+}
+
+/* ─── 15. TIMELINE [ANIM 34-36] ───────────────────────────── */
+.timeline{position:relative;margin-top:clamp(2rem,4vw,3rem)}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--line)}
+.timeline .fill{
+  position:absolute;left:0;top:0;width:1px;height:0;
+  background:linear-gradient(180deg,var(--celadon-dp),var(--persimmon));
+  transition:height 1.4s var(--ease-io);
+}
+@media(min-width:768px){.timeline::before,.timeline .fill{left:120px}}
+.step{
+  position:relative;
+  padding:0 0 clamp(2rem,4vw,3rem) 2.2rem;
+  display:grid;gap:.6rem;
+}
+@media(min-width:768px){
+  .step{grid-template-columns:100px 1fr;gap:2.4rem;padding-left:0;padding-right:2rem}
+}
+.step::before{
+  content:'';position:absolute;left:-4px;top:.55rem;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--hanji);border:1.5px solid var(--line);
+  transition:background .5s var(--ease-out), border-color .5s var(--ease-out), transform .5s var(--ease-spring);
+  z-index:2;
+}
+@media(min-width:768px){.step::before{left:116px}}
+.step.in::before{background:var(--persimmon);border-color:var(--persimmon);transform:scale(1.35)}
+.step .no{
+  font-family:'Fraunces',serif;font-size:.85rem;color:var(--celadon-dp);
+  letter-spacing:.05em;padding-top:.1rem;
+}
+.step h3{font-family:'Fraunces',serif;font-size:var(--f-h3);font-weight:500;margin-bottom:.45rem}
+.step p{color:var(--text-muted);font-size:.94rem;max-width:56ch}
+
+/* ─── 16. FAQ [ANIM 37-39] ────────────────────────────────── */
+.faq-list{border-top:1px solid var(--line)}
+.faq-item{border-bottom:1px solid var(--line)}
+.faq-q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  padding:clamp(1.1rem,2.4vw,1.6rem) 0;text-align:left;
+  transition:color .35s var(--ease-out);
+}
+.faq-q:hover{color:var(--celadon-dp)}
+.faq-q .q-txt{font-family:'Fraunces',serif;font-size:clamp(1.02rem,1.9vw,1.24rem);font-weight:500;line-height:1.35}
+.faq-ico{
+  flex-shrink:0;width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--line);display:grid;place-items:center;
+  transition:background .4s var(--ease-out), border-color .4s var(--ease-out), transform .5s var(--ease-io);
+}
+.faq-q[aria-expanded="true"] .faq-ico{background:var(--ink);border-color:var(--ink);transform:rotate(135deg)}
+.faq-q[aria-expanded="true"] .faq-ico svg{stroke:var(--hanji)}
+.faq-ico svg{transition:stroke .4s var(--ease-out)}
+.faq-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .55s var(--ease-io)}
+.faq-panel.open{grid-template-rows:1fr}
+.faq-panel > div{overflow:hidden}
+.faq-panel p{
+  padding-bottom:clamp(1.1rem,2.4vw,1.6rem);
+  color:var(--text-muted);max-width:66ch;font-size:.95rem;line-height:1.75;
+}
+
+/* ─── 17. CONTACT / FORM [ANIM 40-44] ─────────────────────── */
+.contact{background:var(--ink);color:var(--hanji)}
+.contact .eyebrow{color:var(--celadon-lt)}
+.contact .sec-head h2{color:var(--hanji)}
+.contact .sec-head p{color:var(--text-inv-muted)}
+.contact-grid{display:grid;gap:clamp(2rem,5vw,4rem);grid-template-columns:1fr}
+@media(min-width:960px){.contact-grid{grid-template-columns:1fr 1.15fr}}
+
+.contact-info dl{display:grid;gap:1.4rem}
+.contact-info dt{
+  font-size:var(--f-micro);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--celadon-lt);margin-bottom:.35rem;
+}
+.contact-info dd{color:var(--text-inv-muted);font-size:.95rem}
+.contact-info dd strong{color:var(--hanji);font-weight:500}
+.ph-note{
+  margin-top:1.8rem;padding:1rem 1.15rem;
+  border:1px dashed rgba(247,243,234,.2);border-radius:var(--r-md);
+  font-size:.78rem;color:var(--text-inv-muted);line-height:1.55;
+}
+
+form{display:grid;gap:1.15rem}
+.field{position:relative}
+.field label{
+  position:absolute;left:1rem;top:1rem;
+  font-size:.9rem;color:var(--text-muted);
+  pointer-events:none;transform-origin:left top;
+  transition:transform .3s var(--ease-out), color .3s var(--ease-out);
+}
+.field input,.field textarea,.field select{
+  width:100%;padding:1.55rem 1rem .55rem;
+  background:rgba(247,243,234,.04);
+  border:1px solid var(--line-inv);border-radius:var(--r-md);
+  color:var(--hanji);font-size:.95rem;
+  transition:border-color .35s var(--ease-out), background .35s var(--ease-out), box-shadow .35s var(--ease-out);
+}
+.field textarea{min-height:132px;resize:vertical;padding-top:1.75rem;font-family:inherit;line-height:1.6}
+.field input:focus,.field textarea:focus,.field select:focus{
+  outline:none;border-color:var(--celadon);
+  background:rgba(247,243,234,.07);
+  box-shadow:0 0 0 3px rgba(123,160,152,.14);
+}
+.field input:focus + label,
+.field textarea:focus + label,
+.field input:not(:placeholder-shown) + label,
+.field textarea:not(:placeholder-shown) + label,
+.field select:focus + label,
+.field select:valid + label{
+  transform:translateY(-.62rem) scale(.74);
+  color:var(--celadon-lt);
+}
+.field select{padding-top:1.55rem;appearance:none;-webkit-appearance:none;cursor:pointer}
+.field select option{background:var(--ink-2);color:var(--hanji)}
+.field .sel-arrow{
+  position:absolute;right:1rem;top:50%;transform:translateY(-50%);
+  pointer-events:none;color:var(--celadon-lt);
+}
+.field.err input,.field.err textarea,.field.err select{border-color:var(--persimmon)}
+.field .msg{
+  display:block;font-size:.74rem;color:var(--persimmon);
+  margin-top:.35rem;opacity:0;transform:translateY(-4px);
+  transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.field.err .msg{opacity:1;transform:translateY(0)}
+.field.shake{animation:shake .4s var(--ease-io)}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(5px)}
+  60%{transform:translateX(-3px)}
+  80%{transform:translateX(2px)}
+}
+.form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:.4rem}
+.form-status{
+  font-size:.8rem;opacity:0;transform:translateY(6px);
+  transition:opacity .4s var(--ease-out), transform .4s var(--ease-out);
+}
+.form-status.show{opacity:1;transform:translateY(0)}
+.form-status.ok{color:var(--celadon-lt)}
+.form-status.warn{color:var(--gold)}
+.spin{
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid rgba(247,243,234,.3);border-top-color:var(--hanji);
+  animation:spin .7s linear infinite;display:none;
+}
+.btn.loading .spin{display:block}
+.btn.loading .arw{display:none}
+.btn.loading{cursor:wait;pointer-events:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── 18. CTA BAND ────────────────────────────────────────── */
+.cta-band{
+  background:linear-gradient(120deg,var(--celadon-dp),var(--ink) 70%);
+  color:var(--hanji);border-radius:var(--r-lg);
+  padding:clamp(2.4rem,6vw,4.5rem);
+  display:grid;gap:1.6rem;align-items:center;
+  position:relative;overflow:hidden;
+}
+@media(min-width:820px){.cta-band{grid-template-columns:1fr auto}}
+.cta-band::after{
+  content:'';position:absolute;top:-50%;right:-10%;
+  width:min(420px,55%);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,162,39,.28),transparent 68%);
+  animation:bgDrift 16s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.cta-band h2{font-size:var(--f-h2);position:relative;z-index:2}
+.cta-band p{color:rgba(247,243,234,.72);margin-top:.7rem;max-width:48ch;position:relative;z-index:2}
+.cta-band .btn{position:relative;z-index:2;background:var(--hanji);color:var(--ink)}
+.cta-band .btn::before{background:var(--persimmon)}
+.cta-band .btn:hover{color:var(--hanji)}
+
+/* ─── 19. FOOTER [ANIM 45-46] ─────────────────────────────── */
+footer{background:var(--ink-2);color:var(--hanji);padding-top:clamp(3rem,7vw,5rem)}
+.foot-grid{
+  display:grid;gap:clamp(2rem,4vw,3rem);
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  padding-bottom:clamp(2.2rem,5vw,3.5rem);
+  border-bottom:1px solid var(--line-inv);
+}
+.foot-brand .brand-mark{margin-bottom:1rem}
+.foot-brand p{color:var(--text-inv-muted);font-size:.88rem;max-width:34ch;margin-top:.9rem;line-height:1.7}
+.foot-col h4{
+  font-size:var(--f-micro);letter-spacing:.2em;text-transform:uppercase;
+  color:var(--celadon-lt);margin-bottom:1.1rem;font-weight:600;
+}
+.foot-col ul{display:grid;gap:.65rem}
+.foot-col a{
+  font-size:.88rem;color:var(--text-inv-muted);
+  position:relative;display:inline-block;
+  transition:color .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.foot-col a::after{
+  content:'';position:absolute;left:0;bottom:-2px;height:1px;width:100%;
+  background:var(--celadon);transform:scaleX(0);transform-origin:right;
+  transition:transform .35s var(--ease-out);
+}
+.foot-col a:hover{color:var(--hanji);transform:translateX(3px)}
+.foot-col a:hover::after{transform:scaleX(1);transform-origin:left}
+.foot-bottom{
+  padding-block:1.6rem;display:flex;flex-wrap:wrap;gap:1rem;
+  align-items:center;justify-content:space-between;
+  font-size:.75rem;color:var(--text-inv-muted);
+}
+.foot-bottom .kr{color:rgba(247,243,234,.28);font-size:.8rem;letter-spacing:.1em}
+
+/* ─── 20. BACK TO TOP + TOAST [ANIM 47-48] ────────────────── */
+#toTop{
+  position:fixed;right:clamp(1rem,3vw,1.75rem);bottom:clamp(1rem,3vw,1.75rem);
+  width:46px;height:46px;border-radius:50%;z-index:800;
+  background:var(--ink);color:var(--hanji);
+  display:grid;place-items:center;
+  opacity:0;visibility:hidden;transform:translateY(14px) scale(.85);
+  transition:opacity .45s var(--ease-out), transform .45s var(--ease-spring),
+             visibility .45s var(--ease-out), background .3s var(--ease-out);
+  box-shadow:0 12px 28px -12px rgba(13,15,14,.5);cursor:pointer;
+}
+#toTop.show{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+#toTop:hover{background:var(--persimmon);transform:translateY(-3px) scale(1.06)}
+
+#toast{
+  position:fixed;left:50%;bottom:1.5rem;transform:translate(-50%,150%);
+  background:var(--ink);color:var(--hanji);
+  padding:.85rem 1.35rem;border-radius:var(--r-full);
+  font-size:.82rem;z-index:1100;
+  box-shadow:0 18px 40px -16px rgba(13,15,14,.55);
+  transition:transform .55s var(--ease-spring);
+  max-width:calc(100vw - 2rem);text-align:center;pointer-events:none;
+}
+#toast.show{transform:translate(-50%,0)}
+#toast.toast-warn{background:var(--gold);color:var(--ink)}
+#toast.toast-ok{background:var(--celadon-dp);color:var(--hanji)}
+
+/* ─── 21. CURSOR GLOW + CUSTOM CURSOR [ANIM 49, 54-55] ───── */
+#glow{
+  position:fixed;pointer-events:none;z-index:1;
+  width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle,rgba(123,160,152,.16),transparent 66%);
+  transform:translate(-50%,-50%);
+  opacity:0;transition:opacity .7s var(--ease-out);
+  will-change:transform;top:0;left:0;
+}
+@media(hover:hover) and (pointer:fine){#glow{opacity:1}}
+@media(max-width:1023px){#glow{display:none}}
+
+@media(hover:hover) and (pointer:fine){
+  body,a,button,.filter,.faq-q,input,textarea,select,[data-magnetic]{cursor:none}
+
+  #cursor-dot{
+    position:fixed;top:0;left:0;width:6px;height:6px;border-radius:50%;
+    background:var(--persimmon);pointer-events:none;z-index:9998;
+    will-change:transform;
+    transition:opacity .25s var(--ease-out), background .25s var(--ease-out),
+               width .25s var(--ease-out), height .25s var(--ease-out);
+  }
+  #cursor-ring{
+    position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;
+    border:1px solid rgba(13,15,14,.42);pointer-events:none;z-index:9997;
+    will-change:transform;
+    transition:width .3s var(--ease-out), height .3s var(--ease-out),
+               border-color .3s var(--ease-out), background .3s var(--ease-out),
+               opacity .25s var(--ease-out);
+  }
+  body.cur-hover #cursor-ring{
+    width:60px;height:60px;
+    border-color:var(--celadon-dp);
+    background:rgba(74,114,104,.06);
+  }
+  body.cur-hover #cursor-dot{
+    width:8px;height:8px;background:var(--celadon-dp);
+  }
+  body.cur-out #cursor-dot,
+  body.cur-out #cursor-ring{opacity:0}
+}
+@media (hover:none),(pointer:coarse){#cursor-dot,#cursor-ring{display:none}}
+
+/* ─── 22. RIPPLE [ANIM 52] ────────────────────────────────── */
+.btn .ripple{
+  position:absolute;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,255,255,.55),transparent 70%);
+  transform:scale(0);animation:rippleOut .7s var(--ease-out) forwards;
+  z-index:1;mix-blend-mode:screen;
+}
+.btn-ghost .ripple,
+.cta-band .btn .ripple{
+  background:radial-gradient(circle,rgba(196,85,59,.45),transparent 70%);
+  mix-blend-mode:multiply;
+}
+@keyframes rippleOut{
+  0%{transform:scale(0);opacity:.9}
+  100%{transform:scale(1);opacity:0}
+}
+
+/* ─── 23. SPLIT TEXT [ANIM 51] ────────────────────────────── */
+.split-word{
+  display:inline-block;overflow:hidden;
+  vertical-align:bottom;line-height:1.15;
+}
+.split-inner{
+  display:inline-block;transform:translateY(105%);opacity:0;
+  transition:transform .85s var(--ease-io), opacity .55s var(--ease-out);
+}
+.split-in .split-inner{transform:translateY(0);opacity:1}
+[data-scramble]{display:inline-block;font-variant-ligatures:none;letter-spacing:.02em}
+
+/* ─── 24. SCROLL DIRECTION + KONAMI [ANIM 64, 68] ────────── */
+body[data-scroll-dir="down"] header.scrolled{
+  box-shadow:0 1px 0 var(--line), 0 8px 24px -20px rgba(13,15,14,.28);
+}
+body.konami{animation:konamiPulse 4s var(--ease-out)}
+body.konami .brand-mark{animation:konamiSpin 1.4s var(--ease-spring) 2}
+@keyframes konamiPulse{
+  0%{filter:hue-rotate(0deg)}
+  25%{filter:hue-rotate(35deg) saturate(1.2)}
+  75%{filter:hue-rotate(-25deg) saturate(1.15)}
+  100%{filter:hue-rotate(0deg)}
+}
+@keyframes konamiSpin{
+  0%{transform:rotate(0deg) scale(1)}
+  50%{transform:rotate(360deg) scale(1.18)}
+  100%{transform:rotate(720deg) scale(1)}
+}
+
+/* ─── 25. UTILITIES ───────────────────────────────────────── */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.skip{
+  position:absolute;top:-100px;left:1rem;z-index:10000;
+  background:var(--ink);color:var(--hanji);
+  padding:.7rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;
+  transition:top .3s var(--ease-out);
+}
+.skip:focus{top:1rem}
+
+/* ─── 26. REDUCED MOTION CONTRACT ─────────────────────────── */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+    scroll-behavior:auto !important;
+  }
+  .js .reveal{opacity:1 !important;transform:none !important}
+  .js .about-media .mask{transform:scaleY(0) !important}
+  .hero h1 .line > span{transform:none !important}
+  #intro,#glow,#cursor-dot,#cursor-ring,#hero-canvas{display:none !important}
+  .marquee-track{animation:none}
+  body,a,button,.filter,.faq-q,input,textarea,select,[data-magnetic]{cursor:auto !important}
+  .btn .ripple,.card-glow{display:none}
+  .split-inner{transform:none !important;opacity:1 !important}
+  .hero-bg,.cta-band::after{animation:none}
+  .hero-eyebrow,.hero-lede,.hero-actions,.hero-meta,.scroll-cue{
+    opacity:1 !important;transform:none !important;animation:none !important;
+  }
+  body.konami,body.konami .brand-mark{animation:none}
+}
+
+/* ─── 27. PRINT ───────────────────────────────────────────── */
+@media print{
+  #intro,#glow,#progress,#toTop,#toast,#drawer,
+  #cursor-dot,#cursor-ring,#hero-canvas,.burger,
+  .scroll-cue,.marquee,.cta-band::after,.card-glow{display:none !important}
+  body{background:#fff;color:#000;font-size:11pt}
+  header{position:static;height:auto;background:none;box-shadow:none}
+  .hero{min-height:auto;padding-block:2rem}
+  .section-pad{padding-block:1.5rem}
+  .reveal{opacity:1 !important;transform:none !important}
+}
+</style>
 </head>
-<body class="bg-gray-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-300 font-sans">
+<body>
 
-    <!-- Floating Particles Container -->
-    <div id="particles-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+<a class="skip" href="#main">Skip to main content</a>
+<div id="glow" aria-hidden="true"></div>
+<div id="cursor-dot" aria-hidden="true"></div>
+<div id="cursor-ring" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
 
-    <!-- Top Bar -->
-    <div class="bg-slate-950 text-slate-300 text-xs py-2 px-4 border-b border-slate-800 relative z-20">
-        <div class="max-w-7xl mx-mx-auto flex flex-wrap justify-between items-center gap-2 container">
-            <div class="flex items-center gap-4">
-                <span><i class="fa-solid fa-phone text-koreaRed mr-1"></i> +92 300 1234567</span>
-                <span class="hidden md:inline"><i class="fa-solid fa-envelope text-koreaBlue mr-1"></i> info@okkorean.edu.pk</span>
-                <span class="hidden lg:inline"><i class="fa-solid fa-location-dot text-accentGold mr-1"></i> Main Boulevard, Lahore / Islamabad</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <!-- Admin Lead Drawer Toggle -->
-                <button onclick="toggleAdminDrawer()" class="hover:text-accentGold text-xs flex items-center gap-1 bg-slate-800 px-2 py-1 rounded">
-                    <i class="fa-solid fa-user-shield text-accentGold"></i> Admin Leads (<span id="lead-count-badge">0</span>)
-                </button>
-                
-                <!-- Dark Mode Toggle -->
-                <button onclick="toggleDarkMode()" class="p-1 rounded bg-slate-800 hover:text-amber-400 transition">
-                    <i id="theme-icon" class="fa-solid fa-moon"></i>
-                </button>
+<!-- ══════════ INTRO OVERLAY ══════════ -->
+<div id="intro" aria-hidden="true">
+  <div class="intro-mark">OK Korean Language Centre</div>
+  <div class="intro-kr">한국어 교육원 · Pakistan</div>
+  <div class="intro-bar"></div>
+</div>
 
-                <!-- Language Selector Dropdown -->
-                <select id="lang-switcher" class="bg-slate-800 text-slate-200 text-xs rounded px-1 py-0.5 outline-none cursor-pointer">
-                    <option value="en">English</option>
-                    <option value="ur">اردو (Urdu)</option>
-                    <option value="kr">한국어 (Korean)</option>
-                </select>
+<!-- ══════════ HEADER ══════════ -->
+<header id="header">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="OK Korean Language Centre — home">
+      <span class="brand-mark" aria-hidden="true">한</span>
+      <span class="brand-text">
+        <span class="brand-name">OK Korean</span>
+        <span class="brand-sub">Language Centre</span>
+      </span>
+    </a>
 
-                <!-- WhatsApp Quick Chat -->
-                <a href="https://wa.me/923001234567" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1 rounded-full text-xs font-semibold flex items-center gap-1 transition">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp
-                </a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <nav class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-md border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 bg-koreaRed rounded-full flex items-center justify-center text-white font-extrabold text-2xl shadow-lg ring-2 ring-koreaNavy">
-                        <span class="font-korean">OK</span>
-                    </div>
-                    <div>
-                        <a href="#" class="text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1">
-                            OK Korean <span class="text-koreaRed">Language Centre</span>
-                        </a>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">OEC Work Visa & South Korea Study Visa Experts</p>
-                    </div>
-                </div>
-
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center space-x-8 font-medium text-sm">
-                    <a href="#hero" class="hover:text-koreaRed transition">Home</a>
-                    <a href="#services" class="hover:text-koreaRed transition">Visa Programs</a>
-                    <a href="#calculator" class="hover:text-koreaRed transition">Visa Estimator</a>
-                    <a href="#quiz" class="hover:text-koreaRed transition">EPS Quiz Tool</a>
-                    <a href="#stats" class="hover:text-koreaRed transition">Success Rate</a>
-                    <a href="#testimonials" class="hover:text-koreaRed transition">Reviews</a>
-                    <button onclick="openModal()" class="bg-gradient-to-r from-koreaRed to-rose-700 hover:from-rose-700 hover:to-koreaRed text-white px-5 py-2.5 rounded-full shadow-lg hover:shadow-red-500/30 transition-all font-semibold glow-hover">
-                        Apply Online <i class="fa-solid fa-paper-plane ml-1"></i>
-                    </button>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="lg:hidden flex items-center">
-                    <button onclick="toggleMobileMenu()" class="text-slate-700 dark:text-slate-200 text-2xl focus:outline-none">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Mobile Menu Drawer -->
-        <div id="mobile-menu" class="hidden lg:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3">
-            <a href="#hero" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Home</a>
-            <a href="#services" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Visa Programs</a>
-            <a href="#calculator" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Visa Estimator</a>
-            <a href="#quiz" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">EPS Quiz Tool</a>
-            <a href="#stats" onclick="toggleMobileMenu()" class="block py-2 hover:text-koreaRed">Success Rate</a>
-            <button onclick="toggleMobileMenu(); openModal();" class="w-full mt-2 bg-koreaRed text-white py-3 rounded-xl font-semibold">
-                Apply Online
-            </button>
-        </div>
+    <nav class="desk" aria-label="Primary">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="hero" class="relative animated-bg text-white py-24 lg:py-32 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="space-y-6 text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-accentGold text-sm font-semibold">
-                        <i class="fa-solid fa-award"></i> Pakistan's #1 Rated EPS-TOPIK & Study Visa Prep Centre
-                    </div>
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight">
-                        Your Gateway To <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-amber-300 to-teal-300">South Korea</span>
-                    </h1>
-                    <p class="text-lg text-slate-200 max-w-xl mx-auto lg:mx-0">
-                        Specialized preparation for **OEC EPS-TOPIK E-9 Work Visa** and **D-2/D-4 South Korea Study Visas**. Expert native Korean language training, CBT practice tests, and end-to-end document guidance.
-                    </p>
+    <div style="display:flex;align-items:center;gap:.6rem">
+      <a href="#contact" class="btn btn-solid btn-sm" style="display:none" id="ctaDesk">
+        Enquire
+        <svg class="arw" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
 
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                        <button onclick="openModal()" class="bg-koreaRed hover:bg-rose-700 text-white text-lg font-bold px-8 py-4 rounded-xl shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-1 transition duration-200">
-                            Get Free Consultation <i class="fa-solid fa-arrow-right ml-2"></i>
-                        </button>
-                        <a href="#calculator" class="bg-white/10 hover:bg-white/20 text-white border border-white/30 text-lg font-semibold px-8 py-4 rounded-xl backdrop-blur-md transition">
-                            Calculate Visa Eligibility
-                        </a>
-                    </div>
+<!-- ══════════ MOBILE DRAWER ══════════ -->
+<div id="drawer" role="dialog" aria-modal="true" aria-label="Navigation">
+  <nav>
+    <ul>
+      <li><a href="#about"><span class="idx">01</span> About</a></li>
+      <li><a href="#courses"><span class="idx">02</span> Courses</a></li>
+      <li><a href="#journey"><span class="idx">03</span> Journey</a></li>
+      <li><a href="#faq"><span class="idx">04</span> FAQ</a></li>
+      <li><a href="#contact"><span class="idx">05</span> Contact</a></li>
+    </ul>
+  </nav>
+  <div class="drawer-foot">
+    <strong>OK Korean Language Centre</strong>
+    [ City, Pakistan ] · [ phone ] · [ email ]
+  </div>
+</div>
 
-                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-white/10 text-center lg:text-left">
-                        <div>
-                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">98%+</p>
-                            <p class="text-xs text-slate-300">Exam Pass Rate</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">1,500+</p>
-                            <p class="text-xs text-slate-300">Students Sent to Korea</p>
-                        </div>
-                        <div>
-                            <p class="text-2xl lg:text-3xl font-extrabold text-accentGold">10+ Yrs</p>
-                            <p class="text-xs text-slate-300">OEC Prep Excellence</p>
-                        </div>
-                    </div>
-                </div>
+<main id="main">
 
-                <!-- Interactive Hero Graphic Card -->
-                <div class="relative">
-                    <div class="glass-panel p-8 rounded-3xl shadow-2xl text-slate-800 dark:text-white space-y-6 relative z-10 border border-white/20">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xs font-bold uppercase tracking-wider text-koreaRed bg-red-100 dark:bg-red-900/40 px-3 py-1 rounded-full">Official OEC Curriculum</span>
-                            <span class="text-xs text-slate-400 font-korean">대한민국 비자 준비</span>
-                        </div>
-                        <h3 class="text-2xl font-bold">Comprehensive Visa Programs</h3>
-                        
-                        <div class="space-y-4">
-                            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 flex items-start gap-4">
-                                <div class="bg-blue-600/20 text-blue-500 p-3 rounded-lg text-xl"><i class="fa-solid fa-briefcase"></i></div>
-                                <div>
-                                    <h4 class="font-bold">E-9 Work Visa (EPS-TOPIK)</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Computer Based Test (CBT), Skill Test & Medical Clearance guidance.</p>
-                                </div>
-                            </div>
-                            <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/60 flex items-start gap-4">
-                                <div class="bg-emerald-600/20 text-emerald-500 p-3 rounded-lg text-xl"><i class="fa-solid fa-graduation-cap"></i></div>
-                                <div>
-                                    <h4 class="font-bold">D-2 & D-4 Study Visas</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Bachelor/Master programs, scholarship guidance & embassy interviews.</p>
-                                </div>
-                            </div>
-                        </div>
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grain" aria-hidden="true"></div>
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <span class="glyph glyph-1 kr" aria-hidden="true" data-parallax="0.06">한</span>
+  <span class="glyph glyph-2 kr" aria-hidden="true" data-parallax="-0.04">어</span>
+  <span class="glyph glyph-3 kr" aria-hidden="true" data-parallax="0.09">말</span>
 
-                        <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs flex items-center justify-between">
-                            <span><i class="fa-solid fa-clock mr-1"></i> New Batch Starts Monday!</span>
-                            <button onclick="openModal()" class="font-bold underline hover:text-amber-500">Reserve Seat</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div class="wrap">
+    <p class="hero-eyebrow">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="eyebrow">Korean Language Education · Pakistan</span>
+    </p>
 
-    <!-- Services & Visa Programs -->
-    <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <h2 class="text-xs uppercase font-extrabold text-koreaRed tracking-widest mb-2">Our Core Expertise</h2>
-            <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Structured Courses for Korean Work & Study Visas</p>
-            <p class="text-slate-600 dark:text-slate-400 mt-3">From beginner Korean language classes to specialized OEC EPS-TOPIK exam drills and university admissions.</p>
-        </div>
+    <h1 class="display">
+      <span class="line"><span>Learn Korean</span></span>
+      <span class="line"><span>with structure,</span></span>
+      <span class="line"><span>not guesswork.</span></span>
+    </h1>
 
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Card 1: EPS-TOPIK -->
-            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-koreaRed transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
-                <div>
-                    <div class="w-14 h-14 bg-red-100 dark:bg-red-950 text-koreaRed rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
-                        <i class="fa-solid fa-passport"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">EPS-TOPIK Work Visa Prep</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Designed for candidates applying through the Overseas Employment Corporation (OEC) for South Korea E-9 government work permits.</p>
-                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> CBT Exam Simulation Software</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> 2000+ Korean Vocabulary Drill</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Physical Skill Test Preparation</li>
-                    </ul>
-                </div>
-                <button onclick="openModal('EPS-TOPIK Work Visa')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-koreaRed py-3 rounded-xl font-semibold transition">
-                    Enroll For Work Visa
-                </button>
-            </div>
+    <p class="lede hero-lede">
+      [ Replace with verified copy. ] Structured Korean language classes
+      designed around clear levels, consistent practice, and measurable
+      progress — from first Hangul character to exam preparation.
+    </p>
 
-            <!-- Card 2: Study Visa -->
-            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-koreaBlue transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
-                <div>
-                    <div class="w-14 h-14 bg-blue-100 dark:bg-blue-950 text-koreaBlue rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
-                        <i class="fa-solid fa-user-graduate"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">South Korea Study Visa (D-2/D-4)</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Complete admissions assistance for top Korean universities with GKS Scholarship guidance and embassy file prep.</p>
-                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> University Application & SOP</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Bank Statement Guidance</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> TOPIK Level 2 / 3 / 4 Fast Track</li>
-                    </ul>
-                </div>
-                <button onclick="openModal('Study Visa South Korea')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-koreaBlue py-3 rounded-xl font-semibold transition">
-                    Apply For Study Visa
-                </button>
-            </div>
-
-            <!-- Card 3: Spoken & Business Korean -->
-            <div class="glass-panel p-8 rounded-2xl shadow-lg border hover:border-accentGold transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between">
-                <div>
-                    <div class="w-14 h-14 bg-amber-100 dark:bg-amber-950 text-amber-600 rounded-2xl flex items-center justify-center text-2xl font-bold mb-6">
-                        <i class="fa-solid fa-language"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Spoken & General Korean</h3>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">Interactive conversational Korean courses for job seekers, spouses, and business professionals seeking fluency in Hangul.</p>
-                    <ul class="space-y-2 text-sm text-slate-700 dark:text-slate-300 mb-6">
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Native Speaker Pronunciation</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Practical Daily Conversation</li>
-                        <li><i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i> Flexible Morning/Evening Classes</li>
-                    </ul>
-                </div>
-                <button onclick="openModal('General Spoken Korean')" class="w-full bg-slate-900 dark:bg-slate-800 text-white hover:bg-accentGold py-3 rounded-xl font-semibold transition">
-                    Learn Spoken Korean
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Interactive Fee & Visa Eligibility Calculator -->
-    <section id="calculator" class="py-16 bg-slate-100 dark:bg-slate-800/50">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="glass-panel p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700">
-                <div class="text-center max-w-2xl mx-auto mb-10">
-                    <span class="text-xs font-bold uppercase tracking-widest text-koreaBlue bg-blue-100 dark:bg-blue-900/50 px-3 py-1 rounded-full">Interactive Estimator</span>
-                    <h2 class="text-3xl font-extrabold mt-3">Calculate Visa Eligibility & Course Fee</h2>
-                    <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">Select your options below to get an instant cost and timeframe breakdown.</p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <!-- Visa Category -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-2">Target Visa Category</label>
-                        <select id="calc-visa" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
-                            <option value="oec">OEC EPS-TOPIK (E-9 Work Visa)</option>
-                            <option value="study_d4">Study Visa (D-4 Language Course)</option>
-                            <option value="study_d2">Study Visa (D-2 Degree Program)</option>
-                        </select>
-                    </div>
-
-                    <!-- Education Level -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-2">Your Education Level</label>
-                        <select id="calc-edu" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
-                            <option value="matric">Matriculation / Secondary</option>
-                            <option value="intermediate">Intermediate / F.A / F.Sc</option>
-                            <option value="bachelor">Bachelor's Degree or Higher</option>
-                        </select>
-                    </div>
-
-                    <!-- Current Korean Level -->
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-2">Current Korean Level</label>
-                        <select id="calc-level" onchange="calculateVisaEstimate()" class="w-full p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 font-medium">
-                            <option value="zero">Absolute Beginner (Zero Knowledge)</option>
-                            <option value="basic">Can Read Hangul Characters</option>
-                            <option value="intermediate">Passed Basic TOPIK 1</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Estimation Output Box -->
-                <div class="bg-slate-900 text-white p-6 rounded-2xl grid md:grid-cols-4 gap-6 text-center">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-semibold">Eligibility Score</p>
-                        <p id="est-score" class="text-2xl font-extrabold text-emerald-400 mt-1">95% High</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-semibold">Recommended Duration</p>
-                        <p id="est-duration" class="text-2xl font-extrabold text-amber-400 mt-1">3 Months</p>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-semibold">Est. Tuition Fee</p>
-                        <p id="est-fee" class="text-2xl font-extrabold text-koreaBlue dark:text-blue-400 mt-1">PKR 35,000</p>
-                    </div>
-                    <div class="flex items-center justify-center">
-                        <button onclick="openModal()" class="w-full bg-koreaRed hover:bg-rose-700 text-white font-bold py-3 px-4 rounded-xl text-sm transition">
-                            Book Assessment
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- EPS-TOPIK Mini Quiz / Vocabulary Tool -->
-    <section id="quiz" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <span class="text-xs font-bold uppercase tracking-widest text-koreaRed bg-red-100 dark:bg-red-950 px-3 py-1 rounded-full">Interactive Practice Tool</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white mt-4">Test Your EPS-TOPIK Vocabulary Skills</h2>
-                <p class="text-slate-600 dark:text-slate-400 mt-4">
-                    Try this quick interactive tool to practice Korean words commonly featured in the official OEC CBT examination.
-                </p>
-                
-                <div class="mt-6 space-y-4 text-sm">
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-koreaRed text-lg"></i>
-                        <span>Includes real EPS-TOPIK picture and word match formats.</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-circle-check text-koreaRed text-lg"></i>
-                        <span>Instant score feedback with full explanations.</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quiz Card Widget -->
-            <div class="glass-panel p-8 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-xs font-bold uppercase text-slate-500">Korean Vocabulary Practice</span>
-                    <span id="quiz-progress" class="text-xs font-bold text-koreaRed bg-red-100 dark:bg-red-950 px-2.5 py-1 rounded-full">Question 1 of 3</span>
-                </div>
-
-                <div id="quiz-box">
-                    <h3 id="quiz-question" class="text-2xl font-bold font-korean mb-6 text-center text-koreaNavy dark:text-accentGold">
-                        안녕하세요 (An-nyeong-ha-se-yo)
-                    </h3>
-
-                    <div id="quiz-options" class="grid grid-cols-1 gap-3">
-                        <!-- Dynamic Buttons inserted by JS -->
-                    </div>
-
-                    <div id="quiz-feedback" class="mt-4 p-3 rounded-xl text-center text-sm font-semibold hidden"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Student Testimonials -->
-    <section id="testimonials" class="py-20 bg-slate-900 text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-xs font-bold uppercase tracking-widest text-accentGold">Success Stories</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold mt-2">What Our Students Say</h2>
-                <p class="text-slate-400 mt-2">Real visa approvals and success stories from OK Korean Language Centre alumni.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
-                            MA
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Muhammad Ali</h4>
-                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> E-9 Work Visa Issued</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-300 italic">"I passed my EPS-TOPIK CBT exam with 185/200 score on my first attempt! OK Korean Centre's computer lab tests made the real OEC exam feel super easy."</p>
-                </div>
-
-                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
-                            ZF
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Zainab Fatima</h4>
-                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> D-2 Bachelor Student</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-300 italic">"Got my South Korea study visa for Hanyang University with scholarship. Their team guided me through document attestation and embassy interview preparation!"</p>
-                </div>
-
-                <div class="bg-slate-800/80 p-6 rounded-2xl border border-slate-700 relative">
-                    <div class="flex items-center gap-4 mb-4">
-                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center font-bold text-accentGold text-xl">
-                            UR
-                        </div>
-                        <div>
-                            <h4 class="font-bold">Usman Raza</h4>
-                            <p class="text-xs text-emerald-400"><i class="fa-solid fa-circle-check"></i> E-9 Skilled Worker</p>
-                        </div>
-                    </div>
-                    <p class="text-sm text-slate-300 italic">"Best institute in Pakistan for Korean language. Highly disciplined environment and excellent teachers who focus on real conversational skills."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer & Contact Section -->
-    <footer id="contact" class="bg-slate-950 text-slate-400 pt-16 pb-8 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
-            <div>
-                <div class="flex items-center gap-2 text-white font-bold text-xl mb-4">
-                    <span class="w-8 h-8 bg-koreaRed rounded-full flex items-center justify-center text-sm font-korean">OK</span>
-                    OK Korean Language Centre
-                </div>
-                <p class="text-xs text-slate-400 leading-relaxed mb-4">
-                    Pakistan's premier institute for OEC South Korea Work Visa (E-9) EPS-TOPIK Preparation & D-2 / D-4 Study Visas.
-                </p>
-                <div class="flex space-x-3 text-lg">
-                    <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="hover:text-white"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-white"><i class="fa-brands fa-whatsapp text-emerald-500"></i></a>
-                </div>
-            </div>
-
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><a href="#hero" class="hover:text-white transition">Home</a></li>
-                    <li><a href="#services" class="hover:text-white transition">EPS-TOPIK Work Visa</a></li>
-                    <li><a href="#services" class="hover:text-white transition">South Korea Study Visa</a></li>
-                    <li><a href="#calculator" class="hover:text-white transition">Visa Estimator</a></li>
-                    <li><a href="#quiz" class="hover:text-white transition">Online Vocabulary Quiz</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact Info</h4>
-                <ul class="space-y-3 text-xs">
-                    <li><i class="fa-solid fa-location-dot text-koreaRed mr-2"></i> Main Campus: Gulberg III, Lahore, Pakistan</li>
-                    <li><i class="fa-solid fa-phone text-koreaBlue mr-2"></i> +92 300 1234567 / +92 42 35712345</li>
-                    <li><i class="fa-solid fa-envelope text-accentGold mr-2"></i> admissions@okkorean.edu.pk</li>
-                    <li><i class="fa-solid fa-clock text-emerald-500 mr-2"></i> Mon - Sat: 9:00 AM - 7:00 PM</li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Campus Location</h4>
-                <div class="w-full h-32 rounded-xl overflow-hidden bg-slate-800 relative">
-                    <iframe class="w-full h-full border-0 grayscale opacity-80 hover:opacity-100 transition" 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d108832.08018247065!2d74.24372221295353!3d31.520369599553765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39190483e58107d9%3A0xc23abe6ccc7e2462!2sLahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1680000000000" 
-                            allowfullscreen="" loading="lazy"></iframe>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500">
-            <p>© 2026 OK Korean Language Centre. All Rights Reserved.</p>
-            <p class="mt-2 sm:mt-0 font-korean">한국어 교육 및 비자 전문 센터</p>
-        </div>
-    </footer>
-
-    <!-- Modal: Online Registration & Admission Form -->
-    <div id="admission-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
-        <div class="glass-panel max-w-lg w-full p-8 rounded-3xl shadow-2xl relative border border-white/20 dark:border-slate-700 animate-fadeIn">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-            <div class="text-center mb-6">
-                <span class="text-xs font-bold uppercase text-koreaRed bg-red-100 dark:bg-red-950 px-3 py-1 rounded-full">Apply Online</span>
-                <h3 class="text-2xl font-bold mt-2">Student Registration</h3>
-                <p class="text-xs text-slate-500 dark:text-slate-400">Fill in your details to reserve your seat for the upcoming batch.</p>
-            </div>
-
-            <form id="registration-form" onsubmit="handleFormSubmit(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-bold uppercase mb-1">Full Name</label>
-                    <input type="text" id="student-name" required placeholder="e.g. Muhammad Ahmad" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-1">WhatsApp / Phone</label>
-                        <input type="tel" id="student-phone" required placeholder="03001234567" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-1">CNIC Number</label>
-                        <input type="text" id="student-cnic" required placeholder="35202-XXXXXXX-X" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-koreaRed">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-1">Preferred Visa Program</label>
-                        <select id="student-program" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
-                            <option value="EPS-TOPIK Work Visa">EPS-TOPIK Work Visa (E-9)</option>
-                            <option value="South Korea Study Visa">South Korea Study Visa (D-2/D-4)</option>
-                            <option value="General Spoken Korean">Spoken & General Korean</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase mb-1">Preferred Shift</label>
-                        <select id="student-shift" class="w-full p-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-sm">
-                            <option value="Morning Shift (9 AM - 12 PM)">Morning Shift</option>
-                            <option value="Evening Shift (4 PM - 7 PM)">Evening Shift</option>
-                            <option value="Online Virtual Class">Online Virtual Class</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button type="submit" class="w-full bg-gradient-to-r from-koreaRed to-rose-700 text-white font-bold py-3.5 rounded-xl text-base shadow-lg hover:shadow-red-500/30 transition mt-4">
-                    Submit Application <i class="fa-solid fa-check ml-1"></i>
-                </button>
-            </form>
-        </div>
+    <div class="hero-actions">
+      <a href="#courses" class="btn btn-solid" data-magnetic>
+        View Courses
+        <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#contact" class="btn btn-ghost" data-magnetic>
+        Book a Free Assessment
+      </a>
     </div>
 
-    <!-- Admin Leads Drawer (Backend Simulation) -->
-    <div id="admin-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white dark:bg-slate-900 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-slate-200 dark:border-slate-800 p-6 flex flex-col justify-between">
+    <dl class="hero-meta">
+      <div><dt>Levels</dt><dd>Beginner → Advanced</dd></div>
+      <div><dt>Format</dt><dd>[ On-campus / Online ]</dd></div>
+      <div><dt>Focus</dt><dd>TOPIK Preparation</dd></div>
+      <div><dt>Location</dt><dd>[ City, Pakistan ]</dd></div>
+    </dl>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="track"></span>
+  </div>
+</section>
+
+<!-- ══════════ MARQUEE ══════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <span class="marquee-item"><span class="kr">한국어</span> Korean Language</span>
+    <span class="marquee-item"><span class="kr">초급</span> Beginner</span>
+    <span class="marquee-item"><span class="kr">중급</span> Intermediate</span>
+    <span class="marquee-item"><span class="kr">고급</span> Advanced</span>
+    <span class="marquee-item"><span class="kr">말하기</span> Speaking</span>
+    <span class="marquee-item"><span class="kr">쓰기</span> Writing</span>
+    <span class="marquee-item"><span class="kr">듣기</span> Listening</span>
+    <span class="marquee-item"><span class="kr">읽기</span> Reading</span>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section class="section-pad" id="about">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-media reveal" id="aboutMedia">
+        <div class="mask" aria-hidden="true"></div>
+        <span class="kr-tag">교육 · Education</span>
+        <div class="ph">[ Replace with licensed photography<br>of your classroom or centre ]</div>
+      </div>
+
+      <div class="about-body">
+        <div class="sec-head reveal">
+          <span class="eyebrow">About the Centre</span>
+          <h2 class="display">A serious place to learn a serious language.</h2>
+        </div>
+
+        <p class="reveal reveal-d1">
+          [ Replace with verified copy about OK Korean Language Centre. ]
+          This section should describe your actual teaching approach,
+          class sizes, instructor background, and what distinguishes
+          your centre from others.
+        </p>
+        <p class="reveal reveal-d1">
+          Do not publish claims about affiliations, accreditation, pass
+          rates, or student numbers unless they are documented and you
+          are prepared to stand behind them.
+        </p>
+
+        <ul class="about-list">
+          <li class="reveal reveal-d2">
+            <span class="n">01</span>
+            <div>
+              <strong>Level-based progression</strong>
+              <p style="color:var(--text-muted);font-size:.92rem;margin-top:.25rem">
+                Students move through defined levels with clear criteria
+                for advancement. [ Confirm against your actual curriculum. ]
+              </p>
+            </div>
+          </li>
+          <li class="reveal reveal-d3">
+            <span class="n">02</span>
+            <div>
+              <strong>Four-skill integration</strong>
+              <p style="color:var(--text-muted);font-size:.92rem;margin-top:.25rem">
+                Reading, writing, listening and speaking taught together
+                rather than in isolation. [ Confirm against your syllabus. ]
+              </p>
+            </div>
+          </li>
+          <li class="reveal reveal-d4">
+            <span class="n">03</span>
+            <div>
+              <strong>Exam-oriented preparation</strong>
+              <p style="color:var(--text-muted);font-size:.92rem;margin-top:.25rem">
+                Dedicated preparation tracks for standardised Korean
+                language examinations. [ Confirm which exams you prepare for. ]
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ COURSES ══════════ -->
+<section class="section-pad courses" id="courses">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Programmes</span>
+      <h2 class="display">Courses built around real progression.</h2>
+      <p class="lede">
+        [ Replace with your actual course list, levels, durations and
+        delivery modes. ] The four cards below are structural placeholders
+        that demonstrate the layout — none of this describes a verified
+        offering yet.
+      </p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Filter courses by level">
+      <button class="filter" aria-pressed="true" data-filter="all">All</button>
+      <button class="filter" aria-pressed="false" data-filter="beginner">Beginner</button>
+      <button class="filter" aria-pressed="false" data-filter="intermediate">Intermediate</button>
+      <button class="filter" aria-pressed="false" data-filter="advanced">Advanced</button>
+      <button class="filter" aria-pressed="false" data-filter="exam">Exam Prep</button>
+    </div>
+
+    <div class="course-grid" id="courseGrid">
+
+      <article class="card reveal" data-level="beginner" tabindex="0">
+        <div class="card-top">
+          <span class="card-lvl">Beginner</span>
+          <span class="card-kr kr" aria-hidden="true">초급</span>
+        </div>
+        <h3>[ Course name ]</h3>
+        <p>[ Replace with the real description: who it's for, what
+           students will be able to do by the end, prerequisites. ]</p>
+        <div class="card-foot">
+          <span class="dur">[ Duration ]</span>
+          <span class="card-link">Details
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </article>
+
+      <article class="card reveal reveal-d1" data-level="intermediate" tabindex="0">
+        <div class="card-top">
+          <span class="card-lvl">Intermediate</span>
+          <span class="card-kr kr" aria-hidden="true">중급</span>
+        </div>
+        <h3>[ Course name ]</h3>
+        <p>[ Replace with the real description. ]</p>
+        <div class="card-foot">
+          <span class="dur">[ Duration ]</span>
+          <span class="card-link">Details
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </article>
+
+      <article class="card reveal reveal-d2" data-level="advanced" tabindex="0">
+        <div class="card-top">
+          <span class="card-lvl">Advanced</span>
+          <span class="card-kr kr" aria-hidden="true">고급</span>
+        </div>
+        <h3>[ Course name ]</h3>
+        <p>[ Replace with the real description. ]</p>
+        <div class="card-foot">
+          <span class="dur">[ Duration ]</span>
+          <span class="card-link">Details
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </article>
+
+      <article class="card reveal reveal-d3" data-level="exam" tabindex="0">
+        <div class="card-top">
+          <span class="card-lvl">Exam Prep</span>
+          <span class="card-kr kr" aria-hidden="true">시험</span>
+        </div>
+        <h3>[ Course name ]</h3>
+        <p>[ Replace with the real description and state clearly which
+           exam(s) this prepares students for. ]</p>
+        <div class="card-foot">
+          <span class="dur">[ Duration ]</span>
+          <span class="card-link">Details
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="ph-note" style="margin-top:2rem">
+      <strong>Note for the developer:</strong> course content should be
+      driven by the database once the backend is built. These static
+      cards are layout placeholders only.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ STATS ══════════ -->
+<section class="section-pad stats">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">At a Glance</span>
+      <h2 class="display">Numbers we can actually verify.</h2>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat reveal">
+        <div class="num"><span data-count="0">0</span></div>
+        <div class="lbl">[ Metric pending verification ]</div>
+      </div>
+      <div class="stat reveal reveal-d1">
+        <div class="num"><span data-count="0">0</span></div>
+        <div class="lbl">[ Metric pending verification ]</div>
+      </div>
+      <div class="stat reveal reveal-d2">
+        <div class="num"><span data-count="0">0</span></div>
+        <div class="lbl">[ Metric pending verification ]</div>
+      </div>
+      <div class="stat reveal reveal-d3">
+        <div class="num"><span data-count="0">0</span></div>
+        <div class="lbl">[ Metric pending verification ]</div>
+      </div>
+    </div>
+
+    <p class="stat-note">
+      These counters are wired and functional, but deliberately set to
+      <strong>0</strong>. I will not publish invented statistics. Send me
+      real, verifiable figures and I will populate them — otherwise this
+      section should be removed entirely.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ JOURNEY ══════════ -->
+<section class="section-pad" id="journey">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">How It Works</span>
+      <h2 class="display">From enquiry to enrolment.</h2>
+      <p class="lede">
+        [ Confirm this matches your actual process. ] A clear, honest
+        walkthrough of what a prospective student experiences.
+      </p>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <div class="fill" aria-hidden="true"></div>
+
+      <div class="step reveal">
+        <span class="no">Step 01</span>
         <div>
-            <div class="flex justify-between items-center pb-4 border-b border-slate-200 dark:border-slate-800">
-                <h3 class="font-bold text-lg flex items-center gap-2">
-                    <i class="fa-solid fa-database text-koreaBlue"></i> Saved Student Leads
-                </h3>
-                <button onclick="toggleAdminDrawer()" class="text-slate-400 hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            
-            <p class="text-xs text-slate-500 mt-2 mb-4">Leads dynamically saved in browser `localStorage` simulated database.</p>
-
-            <div id="lead-list" class="space-y-3 max-h-[70vh] overflow-y-auto pr-1">
-                <!-- Lead cards inserted dynamically -->
-            </div>
+          <h3>Get in touch</h3>
+          <p>Submit an enquiry through the form or contact us directly.
+             [ Confirm your actual response time. ]</p>
         </div>
+      </div>
 
-        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 flex gap-2">
-            <button onclick="clearLeads()" class="w-full bg-red-600/20 text-red-500 hover:bg-red-600 hover:text-white py-2.5 rounded-xl text-xs font-bold transition">
-                Clear All Leads
-            </button>
+      <div class="step reveal">
+        <span class="no">Step 02</span>
+        <div>
+          <h3>Level assessment</h3>
+          <p>A short assessment places you at the right starting point
+             rather than guessing. [ Confirm whether you offer this. ]</p>
         </div>
+      </div>
+
+      <div class="step reveal">
+        <span class="no">Step 03</span>
+        <div>
+          <h3>Course placement</h3>
+          <p>You are placed into a class that matches your assessed level
+             and availability. [ Confirm class scheduling policy. ]</p>
+        </div>
+      </div>
+
+      <div class="step reveal">
+        <span class="no">Step 04</span>
+        <div>
+          <h3>Begin classes</h3>
+          <p>Structured lessons with defined progression criteria.
+             [ Confirm term length and session frequency. ]</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FAQ ══════════ -->
+<section class="section-pad" id="faq" style="background:var(--hanji-2)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Questions</span>
+      <h2 class="display">Answers before you ask.</h2>
+      <p class="lede">[ Every answer below must be replaced with verified information. ]</p>
     </div>
 
-    <!-- JavaScript Functional Logic -->
-    <script>
-        // --- 1. Floating Particles Initialization ---
-        function createParticles() {
-            const container = document.getElementById('particles-container');
-            const particleCount = 20;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'floating-particle bg-red-500';
-                const size = Math.random() * 8 + 4;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100 + 100}%`;
-                particle.style.animationDuration = `${Math.random() * 10 + 10}s`;
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                container.appendChild(particle);
-            }
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-txt">Do I need any prior Korean language experience?</span>
+          <span class="faq-ico" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <div class="faq-panel"><div><p>[ Replace with your verified answer. ]</p></div></div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-txt">How long does it take to reach a conversational level?</span>
+          <span class="faq-ico" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <div class="faq-panel"><div><p>[ Replace with your verified answer. Avoid promising timelines you cannot guarantee. ]</p></div></div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-txt">Do you offer classes online or only on-campus?</span>
+          <span class="faq-ico" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <div class="faq-panel"><div><p>[ Replace with your verified answer. ]</p></div></div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-txt">What are the fees and payment options?</span>
+          <span class="faq-ico" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <div class="faq-panel"><div><p>[ Replace with your verified fee structure, or state that fees are provided on enquiry. ]</p></div></div>
+      </div>
+
+      <div class="faq-item reveal">
+        <button class="faq-q" aria-expanded="false">
+          <span class="q-txt">Do you help with exam registration?</span>
+          <span class="faq-ico" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+        </button>
+        <div class="faq-panel"><div><p>[ Replace with your verified answer. Be precise about what you do and do not provide. ]</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACT ══════════ -->
+<section class="section-pad contact" id="contact">
+  <div class="wrap">
+    <div class="contact-grid">
+
+      <div class="contact-info">
+        <div class="sec-head reveal">
+          <span class="eyebrow">Get in Touch</span>
+          <h2 class="display">Start with a conversation.</h2>
+          <p class="lede" style="color:var(--text-inv-muted)">
+            [ Replace all contact details with verified information. ]
+          </p>
+        </div>
+
+        <dl>
+          <div class="reveal"><dt>Phone</dt><dd><strong>[ {{PHONE}} ]</strong></dd></div>
+          <div class="reveal reveal-d1"><dt>Email</dt><dd><strong>[ {{EMAIL}} ]</strong></dd></div>
+          <div class="reveal reveal-d2"><dt>Address</dt><dd>[ {{ADDRESS}}, {{CITY}}, Pakistan ]</dd></div>
+          <div class="reveal reveal-d3"><dt>Hours</dt><dd>[ {{HOURS}} ]</dd></div>
+        </dl>
+
+        <div class="ph-note">
+          <strong>Developer note:</strong> this form is <em>not yet connected</em>
+          to any backend. Submitting it will validate your input but will
+          not send or store anything. The backend and database are Phase 2
+          and have not been built.
+        </div>
+      </div>
+
+      <form id="enquiryForm" novalidate class="reveal reveal-d2">
+        <div class="field">
+          <input type="text" id="f-name" name="name" placeholder=" " required autocomplete="name" />
+          <label for="f-name">Full name</label>
+          <span class="msg" data-for="f-name">Please enter your name.</span>
+        </div>
+
+        <div class="field">
+          <input type="email" id="f-email" name="email" placeholder=" " required autocomplete="email" />
+          <label for="f-email">Email address</label>
+          <span class="msg" data-for="f-email">Please enter a valid email address.</span>
+        </div>
+
+        <div class="field">
+          <input type="tel" id="f-phone" name="phone" placeholder=" " autocomplete="tel" />
+          <label for="f-phone">Phone (optional)</label>
+          <span class="msg" data-for="f-phone">Please enter a valid phone number.</span>
+        </div>
+
+        <div class="field">
+          <select id="f-course" name="course" required>
+            <option value="" disabled selected hidden></option>
+            <option value="beginner">Beginner Korean</option>
+            <option value="intermediate">Intermediate Korean</option>
+            <option value="advanced">Advanced Korean</option>
+            <option value="exam">Exam Preparation</option>
+            <option value="other">Other / Not sure</option>
+          </select>
+          <label for="f-course">Course of interest</label>
+          <span class="sel-arrow" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </span>
+          <span class="msg" data-for="f-course">Please select an option.</span>
+        </div>
+
+        <div class="field">
+          <textarea id="f-message" name="message" placeholder=" " required></textarea>
+          <label for="f-message">Your message</label>
+          <span class="msg" data-for="f-message">Please enter at least 10 characters.</span>
+        </div>
+
+        <div class="form-foot">
+          <button type="submit" class="btn btn-solid" id="submitBtn" data-magnetic>
+            <span class="spin" aria-hidden="true"></span>
+            Send Enquiry
+            <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span class="form-status" id="formStatus" role="status" aria-live="polite"></span>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA BAND ══════════ -->
+<section class="section-pad">
+  <div class="wrap">
+    <div class="cta-band reveal">
+      <div>
+        <h2 class="display">Not sure where to start?</h2>
+        <p>Tell us your goal and current level. We'll point you to the right class.</p>
+      </div>
+      <a href="#contact" class="btn" data-magnetic>
+        Enquire Now
+        <svg class="arw" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand reveal">
+        <span class="brand-mark" aria-hidden="true">한</span>
+        <div class="brand-name" style="font-family:'Fraunces',serif;font-size:1.15rem">
+          OK Korean Language Centre
+        </div>
+        <p>[ Short verified description of the centre. ]</p>
+      </div>
+
+      <div class="foot-col reveal reveal-d1">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#courses">Courses</a></li>
+          <li><a href="#journey">Learning Journey</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col reveal reveal-d2">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#contact">[ {{PHONE}} ]</a></li>
+          <li><a href="#contact">[ {{EMAIL}} ]</a></li>
+          <li>[ {{CITY}}, Pakistan ]</li>
+        </ul>
+      </div>
+
+      <div class="foot-col reveal reveal-d3">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© <span id="yr">2025</span> [ {{LEGAL_ENTITY}} ]. All rights reserved.</span>
+      <span class="kr">한국어를 배웁시다</span>
+    </div>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   OK KOREAN LANGUAGE CENTRE — APPLICATION SCRIPT (v2)
+   ═══════════════════════════════════════════════════════════════
+   70 animations, reduced-motion aware, no global leakage.
+   ═══════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  /* ═══════ 01. BOOTSTRAP & UTILITIES ═══════ */
+  document.documentElement.classList.remove('no-js');
+  document.documentElement.classList.add('js');
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  var $ = function(s,c){ return (c||document).querySelector(s); };
+  var $$ = function(s,c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+  var on = function(el,ev,fn,opt){ if(el) el.addEventListener(ev,fn,opt); };
+  var clamp = function(n,lo,hi){ return Math.min(Math.max(n,lo),hi); };
+  var lerp = function(a,b,t){ return a+(b-a)*t; };
+
+  var scrollSubs = [];
+  function subscribeScroll(fn){ scrollSubs.push(fn); fn(); }
+  var ticking = false;
+  function runScrollSubs(){
+    for(var i=0;i<scrollSubs.length;i++){
+      try{ scrollSubs[i](); }catch(e){}
+    }
+    ticking = false;
+  }
+  on(window,'scroll',function(){
+    if(!ticking){ ticking = true; window.requestAnimationFrame(runScrollSubs); }
+  },{passive:true});
+  on(window,'resize',function(){
+    if(!ticking){ ticking = true; window.requestAnimationFrame(runScrollSubs); }
+  });
+
+  /* ═══════ 02. INTRO OVERLAY [01-03] ═══════ */
+  (function(){
+    var intro = $('#intro');
+    if(!intro) return;
+    var killed = false;
+    function kill(){
+      if(killed) return;
+      killed = true;
+      intro.classList.add('done');
+      setTimeout(function(){ if(intro.parentNode) intro.parentNode.removeChild(intro); },800);
+    }
+    on(window,'load',function(){ setTimeout(kill,1300); });
+    setTimeout(kill,3200);
+  })();
+
+  /* ═══════ 03. SCROLL PROGRESS [04] ═══════ */
+  var progress = $('#progress');
+  subscribeScroll(function(){
+    if(!progress) return;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var p = h>0 ? (window.scrollY/h)*100 : 0;
+    progress.style.width = p.toFixed(2)+'%';
+  });
+
+  /* ═══════ 04. HEADER STATE [05] ═══════ */
+  var header = $('#header');
+  var toTop = $('#toTop');
+  subscribeScroll(function(){
+    var y = window.scrollY;
+    if(header) header.classList.toggle('scrolled', y>40);
+    if(toTop) toTop.classList.toggle('show', y>600);
+  });
+
+  /* ═══════ 05. MOBILE DRAWER [10-13] ═══════ */
+  (function(){
+    var burger = $('#burger');
+    var drawer = $('#drawer');
+    if(!burger || !drawer) return;
+    function setOpen(open){
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu':'Open menu');
+      drawer.classList.toggle('open', open);
+      document.body.style.overflow = open ? 'hidden':'';
+      if(open){
+        var first = drawer.querySelector('a');
+        if(first) first.focus({preventScroll:true});
+      }
+    }
+    on(burger,'click',function(){
+      setOpen(burger.getAttribute('aria-expanded') !== 'true');
+    });
+    $$('a',drawer).forEach(function(a){ on(a,'click',function(){ setOpen(false); }); });
+    on(document,'keydown',function(e){
+      if(e.key === 'Escape' && drawer.classList.contains('open')){
+        setOpen(false); burger.focus();
+      }
+    });
+    on(window,'resize',function(){
+      if(window.innerWidth >= 1024 && drawer.classList.contains('open')) setOpen(false);
+    });
+  })();
+
+  /* ═══════ 06. SMOOTH ANCHOR SCROLL [50] ═══════ */
+  (function(){
+    $$('a[href^="#"]').forEach(function(a){
+      on(a,'click',function(e){
+        var id = a.getAttribute('href');
+        if(id === '#' || id.length < 2) return;
+        var t = document.querySelector(id);
+        if(!t) return;
+        e.preventDefault();
+        var offset = (header ? header.offsetHeight : 76) + 12;
+        var top = t.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({top:top,behavior: reduce ? 'auto':'smooth'});
+      });
+    });
+  })();
+
+  /* ═══════ 07. PARALLAX ENGINE [23-26, 59] ═══════ */
+  (function(){
+    if(reduce) return;
+    var glyphs = $$('[data-parallax]');
+    var media = $$('[data-parallax-media]');
+    if(!glyphs.length && !media.length) return;
+    subscribeScroll(function(){
+      var y = window.scrollY;
+      glyphs.forEach(function(el){
+        var rate = parseFloat(el.getAttribute('data-parallax')) || 0;
+        el.style.transform = 'translate3d(0,'+(y*rate).toFixed(2)+'px,0)';
+      });
+      media.forEach(function(el){
+        var r = el.getBoundingClientRect();
+        var center = r.top + r.height/2 - window.innerHeight/2;
+        var rate = parseFloat(el.getAttribute('data-parallax-media')) || 0.05;
+        var img = el.querySelector('img, .ph');
+        if(img) img.style.transform = 'translate3d(0,'+(-center*rate).toFixed(1)+'px,0) scale(1.06)';
+      });
+    });
+  })();
+
+  /* ═══════ 08. SCROLL REVEAL [27-32] ═══════ */
+  (function(){
+    var els = $$('.reveal');
+    if(!els.length) return;
+    if(!('IntersectionObserver' in window) || reduce){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ═══════ 09. ABOUT MASK REVEAL [26] ═══════ */
+  (function(){
+    var el = $('#aboutMedia');
+    if(!el) return;
+    if(!('IntersectionObserver' in window) || reduce){ el.classList.add('in'); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.3});
+    io.observe(el);
+  })();
+
+  /* ═══════ 10. TIMELINE PROGRESS [34-36, 62] ═══════ */
+  (function(){
+    var timeline = $('#timeline');
+    if(!timeline) return;
+    var fill = timeline.querySelector('.fill');
+    var steps = $$('.step', timeline);
+    subscribeScroll(function(){
+      var rect = timeline.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var travelled = vh*0.8 - rect.top;
+      var pct = clamp(travelled/rect.height, 0, 1);
+      if(fill) fill.style.height = (pct*100)+'%';
+      steps.forEach(function(s){
+        if(s.getBoundingClientRect().top < vh*0.72) s.classList.add('in');
+      });
+    });
+  })();
+
+  /* ═══════ 11. COUNT-UP STATS [32-33, 61] ═══════ */
+  (function(){
+    var counters = $$('[data-count]');
+    if(!counters.length) return;
+    function run(el){
+      var target = parseFloat(el.getAttribute('data-count')) || 0;
+      var suffix = el.getAttribute('data-suffix') || '';
+      var prefix = el.getAttribute('data-prefix') || '';
+      var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+      if(target === 0 || reduce){
+        el.textContent = prefix + target.toFixed(decimals) + suffix;
+        return;
+      }
+      var dur = 1600, t0 = null;
+      function tick(ts){
+        if(!t0) t0 = ts;
+        var p = Math.min((ts-t0)/dur, 1);
+        var eased = 1 - Math.pow(1-p, 3);
+        el.textContent = prefix + (target*eased).toFixed(decimals) + suffix;
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+    if(!('IntersectionObserver' in window)){ counters.forEach(run); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ run(e.target); io.unobserve(e.target); }
+      });
+    },{threshold:0.5});
+    counters.forEach(function(c){ io.observe(c); });
+  })();
+
+  /* ═══════ 12. COURSE FILTERS [39] ═══════ */
+  (function(){
+    var buttons = $$('.filter');
+    var cards = $$('#courseGrid .card');
+    if(!buttons.length || !cards.length) return;
+    buttons.forEach(function(btn){
+      on(btn,'click',function(){
+        buttons.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+        btn.setAttribute('aria-pressed','true');
+        var f = btn.getAttribute('data-filter');
+        cards.forEach(function(card){
+          var match = f === 'all' || card.getAttribute('data-level') === f;
+          card.classList.toggle('hide', !match);
+        });
+      });
+    });
+  })();
+
+  /* ═══════ 13. FAQ ACCORDION [37-39, 69] ═══════ */
+  (function(){
+    var qs = $$('.faq-q');
+    if(!qs.length) return;
+    qs.forEach(function(q){
+      on(q,'click',function(){
+        var panel = q.nextElementSibling;
+        var isOpen = q.getAttribute('aria-expanded') === 'true';
+        qs.forEach(function(other){
+          if(other !== q){
+            other.setAttribute('aria-expanded','false');
+            var p = other.nextElementSibling;
+            if(p) p.classList.remove('open');
+          }
+        });
+        q.setAttribute('aria-expanded', String(!isOpen));
+        if(panel) panel.classList.toggle('open', !isOpen);
+      });
+    });
+  })();
+
+  /* ═══════ 14. MAGNETIC BUTTONS [57-58] ═══════ */
+  (function(){
+    if(reduce || !isFine) return;
+    $$('[data-magnetic]').forEach(function(el){
+      var strength = parseFloat(el.getAttribute('data-magnetic')) || 1;
+      on(el,'mousemove',function(e){
+        var r = el.getBoundingClientRect();
+        var x = e.clientX - r.left - r.width/2;
+        var y = e.clientY - r.top - r.height/2;
+        el.style.transform = 'translate('+(x*0.18*strength).toFixed(1)+'px,'+(y*0.28*strength).toFixed(1)+'px)';
+      });
+      on(el,'mouseleave',function(){ el.style.transform = ''; });
+    });
+  })();
+
+  /* ═══════ 15. BUTTON RIPPLE [52] ═══════ */
+  (function(){
+    if(reduce) return;
+    $$('.btn').forEach(function(btn){
+      on(btn,'click',function(e){
+        var r = btn.getBoundingClientRect();
+        var size = Math.max(r.width, r.height) * 1.6;
+        var ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        ripple.style.width = ripple.style.height = size+'px';
+        ripple.style.left = (e.clientX - r.left - size/2)+'px';
+        ripple.style.top = (e.clientY - r.top - size/2)+'px';
+        btn.appendChild(ripple);
+        setTimeout(function(){
+          if(ripple.parentNode) ripple.parentNode.removeChild(ripple);
+        }, 700);
+      });
+    });
+  })();
+
+  /* ═══════ 16. CARD 3D TILT [53] ═══════ */
+  (function(){
+    if(reduce || !isFine) return;
+    $$('.card').forEach(function(card){
+      var strength = 8;
+      on(card,'mousemove',function(e){
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left)/r.width;
+        var py = (e.clientY - r.top)/r.height;
+        card.style.transform =
+          'perspective(900px) translateY(-6px) ' +
+          'rotateX(' + ((py-0.5)*-strength).toFixed(2) + 'deg) ' +
+          'rotateY(' + ((px-0.5)*strength).toFixed(2) + 'deg)';
+      });
+      on(card,'mouseleave',function(){ card.style.transform = ''; });
+    });
+  })();
+
+  /* ═══════ 17. CARD CURSOR GLOW [65] ═══════ */
+  (function(){
+    if(reduce || !isFine) return;
+    $$('.card').forEach(function(card){
+      var overlay = document.createElement('span');
+      overlay.className = 'card-glow';
+      overlay.setAttribute('aria-hidden','true');
+      card.appendChild(overlay);
+      on(card,'mousemove',function(e){
+        var r = card.getBoundingClientRect();
+        overlay.style.setProperty('--mx', ((e.clientX - r.left)/r.width*100)+'%');
+        overlay.style.setProperty('--my', ((e.clientY - r.top)/r.height*100)+'%');
+        overlay.style.opacity = '1';
+      });
+      on(card,'mouseleave',function(){ overlay.style.opacity = '0'; });
+    });
+  })();
+
+  /* ═══════ 18. CUSTOM CURSOR [54-55] ═══════ */
+  (function(){
+    if(reduce || !isFine) return;
+    var dot = $('#cursor-dot');
+    var ring = $('#cursor-ring');
+    if(!dot || !ring) return;
+    var mx = window.innerWidth/2, my = window.innerHeight/2;
+    var dx = mx, dy = my, rx = mx, ry = my, running = false;
+    on(window,'mousemove',function(e){
+      mx = e.clientX; my = e.clientY;
+      if(!running){ running = true; requestAnimationFrame(loop); }
+    },{passive:true});
+    function loop(){
+      dx = lerp(dx, mx, 0.35); dy = lerp(dy, my, 0.35);
+      rx = lerp(rx, mx, 0.14); ry = lerp(ry, my, 0.14);
+      dot.style.transform = 'translate('+dx+'px,'+dy+'px) translate(-50%,-50%)';
+      ring.style.transform = 'translate('+rx+'px,'+ry+'px) translate(-50%,-50%)';
+      if(Math.abs(rx-mx) > 0.4 || Math.abs(ry-my) > 0.4){
+        requestAnimationFrame(loop);
+      } else { running = false; }
+    }
+    $$('a, button, .filter, .faq-q, input, textarea, select, [data-magnetic]').forEach(function(el){
+      on(el,'mouseenter',function(){ document.body.classList.add('cur-hover'); });
+      on(el,'mouseleave',function(){ document.body.classList.remove('cur-hover'); });
+    });
+    on(document,'mouseleave',function(){ document.body.classList.add('cur-out'); });
+    on(document,'mouseenter',function(){ document.body.classList.remove('cur-out'); });
+  })();
+
+  /* ═══════ 19. HERO PARTICLE CANVAS [56] ═══════ */
+  (function(){
+    var canvas = $('#hero-canvas');
+    if(!canvas || reduce) return;
+    var ctx = canvas.getContext('2d');
+    if(!ctx) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var particles = [];
+    var count = 42;
+    var mouse = {x:-9999, y:-9999};
+    var running = true;
+
+    function resize(){
+      var r = canvas.getBoundingClientRect();
+      canvas.width = r.width*dpr;
+      canvas.height = r.height*dpr;
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+      spawn();
+    }
+    function spawn(){
+      var r = canvas.getBoundingClientRect();
+      particles = [];
+      for(var i=0;i<count;i++){
+        particles.push({
+          x: Math.random()*r.width,
+          y: Math.random()*r.height,
+          vx: (Math.random()-0.5)*0.35,
+          vy: (Math.random()-0.5)*0.35,
+          r: Math.random()*1.6 + 0.6
+        });
+      }
+    }
+    function frame(){
+      if(!running) return;
+      var r = canvas.getBoundingClientRect();
+      ctx.clearRect(0,0,r.width,r.height);
+      for(var i=0;i<particles.length;i++){
+        var p = particles[i];
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < 0 || p.x > r.width) p.vx *= -1;
+        if(p.y < 0 || p.y > r.height) p.vy *= -1;
+        var dx = p.x-mouse.x, dy = p.y-mouse.y;
+        var d2 = dx*dx + dy*dy;
+        if(d2 < 14000 && d2 > 0.01){
+          var f = (14000-d2)/14000*0.6;
+          var d = Math.sqrt(d2);
+          p.x += (dx/d)*f; p.y += (dy/d)*f;
         }
-        createParticles();
-
-        // --- 2. Dark/Light Mode Toggle ---
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const themeIcon = document.getElementById('theme-icon');
-            if (document.documentElement.classList.contains('dark')) {
-                themeIcon.className = 'fa-solid fa-sun';
-            } else {
-                themeIcon.className = 'fa-solid fa-moon';
-            }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(74,114,104,0.32)';
+        ctx.fill();
+      }
+      for(var a=0;a<particles.length;a++){
+        for(var b=a+1;b<particles.length;b++){
+          var pa = particles[a], pb = particles[b];
+          var ddx = pa.x-pb.x, ddy = pa.y-pb.y;
+          var dd = ddx*ddx + ddy*ddy;
+          if(dd < 11000){
+            ctx.beginPath();
+            ctx.moveTo(pa.x, pa.y);
+            ctx.lineTo(pb.x, pb.y);
+            ctx.strokeStyle = 'rgba(74,114,104,'+(0.09*(1-dd/11000)).toFixed(3)+')';
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
         }
+      }
+      requestAnimationFrame(frame);
+    }
+    on(canvas,'mousemove',function(e){
+      var r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+    });
+    on(canvas,'mouseleave',function(){ mouse.x = -9999; mouse.y = -9999; });
+    on(window,'resize',resize);
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          var was = running;
+          running = entry.isIntersecting && !reduce;
+          if(running && !was) requestAnimationFrame(frame);
+        });
+      },{threshold:0});
+      io.observe(canvas);
+    }
+    resize();
+    requestAnimationFrame(frame);
+  })();
 
-        // --- 3. Mobile Menu Toggle ---
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
+  /* ═══════ 20. TEXT SCRAMBLE [49] ═══════ */
+  (function(){
+    if(reduce) return;
+    var targets = $$('[data-scramble]');
+    if(!targets.length) return;
+    var pool = 'ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    function scramble(el){
+      var final = el.getAttribute('data-scramble') || el.textContent;
+      var len = final.length, frame = 0, total = 22;
+      function step(){
+        var out = '';
+        for(var i=0;i<len;i++){
+          var reveal = (frame/total)*len;
+          if(i < reveal) out += final[i];
+          else out += pool[Math.floor(Math.random()*pool.length)];
         }
+        el.textContent = out;
+        frame++;
+        if(frame <= total) requestAnimationFrame(step);
+        else el.textContent = final;
+      }
+      step();
+    }
+    if(!('IntersectionObserver' in window)){ targets.forEach(scramble); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ scramble(e.target); io.unobserve(e.target); }
+      });
+    },{threshold:0.5});
+    targets.forEach(function(el){ io.observe(el); });
+  })();
 
-        // --- 4. Modal Controls ---
-        function openModal(programName = '') {
-            if (programName) {
-                document.getElementById('student-program').value = programName;
-            }
-            document.getElementById('admission-modal').classList.remove('hidden');
+  /* ═══════ 21. SPLIT-TEXT STAGGER [51] ═══════ */
+  (function(){
+    if(reduce) return;
+    var els = $$('[data-split]');
+    if(!els.length) return;
+    els.forEach(function(el){
+      if(el.getAttribute('data-split-done') === 'true') return;
+      var text = el.textContent.trim();
+      el.textContent = '';
+      el.setAttribute('data-split-done','true');
+      text.split(/\s+/).forEach(function(word, i){
+        var wrap = document.createElement('span');
+        wrap.className = 'split-word';
+        wrap.style.transitionDelay = (i*0.055)+'s';
+        var inner = document.createElement('span');
+        inner.className = 'split-inner';
+        inner.textContent = word;
+        wrap.appendChild(inner);
+        el.appendChild(wrap);
+        el.appendChild(document.createTextNode(' '));
+      });
+    });
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('split-in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('split-in'); io.unobserve(e.target); }
+      });
+    },{threshold:0.25});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  /* ═══════ 22. SCROLL DIRECTION [68] ═══════ */
+  var scrollDir = {current:'down', last:0};
+  subscribeScroll(function(){
+    var y = window.scrollY;
+    var delta = y - scrollDir.last;
+    if(Math.abs(delta) > 4){
+      var dir = delta > 0 ? 'down' : 'up';
+      if(dir !== scrollDir.current){
+        scrollDir.current = dir;
+        document.body.setAttribute('data-scroll-dir', dir);
+      }
+      scrollDir.last = y;
+    }
+  });
+
+  /* ═══════ 23. MARQUEE DUPLICATION [23, 63] ═══════ */
+  (function(){
+    var track = $('#marqueeTrack');
+    if(!track) return;
+    if(!track.getAttribute('data-cloned')){
+      track.innerHTML += track.innerHTML;
+      track.setAttribute('data-cloned','true');
+    }
+    if(reduce) return;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          track.style.animationPlayState = e.isIntersecting ? 'running':'paused';
+        });
+      },{threshold:0});
+      io.observe(track);
+    }
+  })();
+
+  /* ═══════ 24. BACK TO TOP [47] ═══════ */
+  on(toTop,'click',function(){
+    window.scrollTo({top:0, behavior: reduce ? 'auto':'smooth'});
+  });
+
+  /* ═══════ 25. TOAST [48, 70] ═══════ */
+  var toastEl = $('#toast');
+  var toastTimer;
+  function toast(msg, variant){
+    if(!toastEl) return;
+    toastEl.textContent = msg;
+    toastEl.className = 'show' + (variant ? ' toast-'+variant : '');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 4200);
+  }
+
+  /* ═══════ 26. ENQUIRY FORM [40-44] ═══════ */
+  (function(){
+    var form = $('#enquiryForm');
+    if(!form) return;
+    var statusEl = $('#formStatus');
+    var submitBtn = $('#submitBtn');
+    var rules = {
+      'f-name':    function(v){ return v.trim().length >= 2; },
+      'f-email':   function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); },
+      'f-phone':   function(v){ return v.trim() === '' || /^[+\d][\d\s\-()]{6,}$/.test(v.trim()); },
+      'f-course':  function(v){ return v !== ''; },
+      'f-message': function(v){ return v.trim().length >= 10; }
+    };
+    function validateField(id){
+      var input = document.getElementById(id);
+      if(!input) return true;
+      var field = input.closest('.field');
+      var ok = rules[id] ? rules[id](input.value) : true;
+      field.classList.toggle('err', !ok);
+      if(!ok){
+        field.classList.remove('shake');
+        void field.offsetWidth;
+        field.classList.add('shake');
+      }
+      return ok;
+    }
+    Object.keys(rules).forEach(function(id){
+      var input = document.getElementById(id);
+      if(!input) return;
+      on(input,'blur',function(){ validateField(id); });
+      on(input,'input',function(){
+        var field = input.closest('.field');
+        if(field.classList.contains('err')) validateField(id);
+      });
+    });
+    on(form,'submit',function(e){
+      e.preventDefault();
+      var allValid = true;
+      Object.keys(rules).forEach(function(id){
+        if(!validateField(id)) allValid = false;
+      });
+      if(!allValid){
+        if(statusEl){
+          statusEl.textContent = 'Please correct the highlighted fields.';
+          statusEl.className = 'form-status show warn';
         }
-
-        function closeModal() {
-            document.getElementById('admission-modal').classList.add('hidden');
+        var firstErr = form.querySelector('.field.err input, .field.err textarea, .field.err select');
+        if(firstErr) firstErr.focus();
+        return;
+      }
+      if(submitBtn) submitBtn.classList.add('loading');
+      if(submitBtn) submitBtn.disabled = true;
+      if(statusEl) statusEl.className = 'form-status';
+      setTimeout(function(){
+        if(submitBtn) submitBtn.classList.remove('loading');
+        if(submitBtn) submitBtn.disabled = false;
+        if(statusEl){
+          statusEl.textContent = 'Form is not connected to a server yet — nothing was sent or stored.';
+          statusEl.className = 'form-status show warn';
         }
+        toast('Demo only — no data was transmitted.','warn');
+      }, 700);
+    });
+  })();
 
-        // --- 5. Interactive Visa & Fee Calculator ---
-        function calculateVisaEstimate() {
-            const visa = document.getElementById('calc-visa').value;
-            const edu = document.getElementById('calc-edu').value;
-            const level = document.getElementById('calc-level').value;
-
-            let score = "90% High";
-            let duration = "3 Months";
-            let fee = "PKR 35,000";
-
-            if (visa === 'oec') {
-                fee = "PKR 35,000";
-                duration = level === 'zero' ? "3 Months" : "1.5 Months";
-                score = edu === 'matric' ? "95% Eligible" : "98% Eligible";
-            } else if (visa === 'study_d4') {
-                fee = "PKR 45,000";
-                duration = "4 Months";
-                score = "92% Eligible";
-            } else if (visa === 'study_d2') {
-                fee = "PKR 60,000";
-                duration = "6 Months";
-                score = (edu === 'intermediate' || edu === 'bachelor') ? "96% High Eligibility" : "Requirements Pending";
-            }
-
-            document.getElementById('est-score').innerText = score;
-            document.getElementById('est-duration').innerText = duration;
-            document.getElementById('est-fee').innerText = fee;
+  /* ═══════ 27. KONAMI EASTER EGG [64] ═══════ */
+  (function(){
+    if(reduce) return;
+    var seq = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    var idx = 0;
+    on(document,'keydown',function(e){
+      var k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      if(k === seq[idx]){
+        idx++;
+        if(idx === seq.length){
+          idx = 0;
+          document.body.classList.add('konami');
+          toast("한국어를 배웁시다 — Let's learn Korean!",'ok');
+          setTimeout(function(){ document.body.classList.remove('konami'); }, 4000);
         }
+      } else {
+        idx = (k === seq[0]) ? 1 : 0;
+      }
+    });
+  })();
 
-        // --- 6. EPS-TOPIK Vocabulary Practice Quiz Tool ---
-        const quizData = [
-            {
-                question: "안녕하세요 (An-nyeong-ha-se-yo)",
-                options: ["Thank You", "Hello / Good Day", "Goodbye", "Excuse Me"],
-                correct: 1,
-                explanation: "안녕하세요 is the standard Korean greeting for 'Hello'."
-            },
-            {
-                question: "감사합니다 (Gam-sa-ham-ni-da)",
-                options: ["Sorry", "Welcome", "Thank You", "Yes"],
-                correct: 2,
-                explanation: "감사합니다 means 'Thank You' in polite formal Korean."
-            },
-            {
-                question: "선생님 (Seon-saeng-nim)",
-                options: ["Student", "Doctor", "Teacher", "Manager"],
-                correct: 2,
-                explanation: "선생님 translates to 'Teacher' or respected instructor."
-            }
-        ];
+  /* ═══════ 28. FOOTER YEAR ═══════ */
+  (function(){
+    var el = $('#yr');
+    if(el) el.textContent = new Date().getFullYear();
+  })();
 
-        let currentQuizIndex = 0;
-
-        function loadQuizQuestion() {
-            const current = quizData[currentQuizIndex];
-            document.getElementById('quiz-question').innerText = current.question;
-            document.getElementById('quiz-progress').innerText = `Question ${currentQuizIndex + 1} of ${quizData.length}`;
-            
-            const optionsContainer = document.getElementById('quiz-options');
-            optionsContainer.innerHTML = '';
-            document.getElementById('quiz-feedback').classList.add('hidden');
-
-            current.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-3.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium transition flex items-center justify-between text-sm';
-                btn.innerHTML = `<span>${opt}</span> <i class="fa-regular fa-circle"></i>`;
-                btn.onclick = () => checkQuizAnswer(idx);
-                optionsContainer.appendChild(btn);
-            });
-        }
-
-        function checkQuizAnswer(selectedIdx) {
-            const current = quizData[currentQuizIndex];
-            const feedback = document.getElementById('quiz-feedback');
-            feedback.classList.remove('hidden');
-
-            if (selectedIdx === current.correct) {
-                feedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
-                feedback.innerText = "✓ Correct! " + current.explanation;
-            } else {
-                feedback.className = "mt-4 p-3 rounded-xl text-center text-sm font-semibold bg-red-500/20 text-red-400 border border-red-500/30";
-                feedback.innerText = "✗ Incorrect! " + current.explanation;
-            }
-
-            setTimeout(() => {
-                currentQuizIndex = (currentQuizIndex + 1) % quizData.length;
-                loadQuizQuestion();
-            }, 3000);
-        }
-
-        loadQuizQuestion();
-
-        // --- 7. Full-Stack Local Database Simulation (Student Leads) ---
-        function getLeads() {
-            return JSON.parse(localStorage.getItem('ok_korean_leads') || '[]');
-        }
-
-        function updateLeadBadge() {
-            const leads = getLeads();
-            document.getElementById('lead-count-badge').innerText = leads.length;
-        }
-
-        function renderLeads() {
-            const leads = getLeads();
-            const listContainer = document.getElementById('lead-list');
-            listContainer.innerHTML = '';
-
-            if (leads.length === 0) {
-                listContainer.innerHTML = `<p class="text-slate-500 text-xs text-center py-8">No registered leads found.</p>`;
-                return;
-            }
-
-            leads.forEach((lead, index) => {
-                const item = document.createElement('div');
-                item.className = 'p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs space-y-1 border border-slate-200 dark:border-slate-700';
-                item.innerHTML = `
-                    <div class="flex justify-between font-bold text-slate-900 dark:text-white">
-                        <span>${lead.name}</span>
-                        <span class="text-koreaRed">${lead.program}</span>
-                    </div>
-                    <div class="text-slate-500"><i class="fa-solid fa-phone mr-1"></i> ${lead.phone} | CNIC: ${lead.cnic}</div>
-                    <div class="text-slate-400"><i class="fa-solid fa-clock mr-1"></i> ${lead.shift}</div>
-                `;
-                listContainer.appendChild(item);
-            });
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const newLead = {
-                name: document.getElementById('student-name').value,
-                phone: document.getElementById('student-phone').value,
-                cnic: document.getElementById('student-cnic').value,
-                program: document.getElementById('student-program').value,
-                shift: document.getElementById('student-shift').value,
-                timestamp: new Date().toLocaleString()
-            };
-
-            const leads = getLeads();
-            leads.unshift(newLead);
-            localStorage.setItem('ok_korean_leads', JSON.stringify(leads));
-
-            updateLeadBadge();
-            renderLeads();
-            closeModal();
-            document.getElementById('registration-form').reset();
-
-            alert('🎉 Application Submitted Successfully! Our admissions team will contact you shortly.');
-        }
-
-        function toggleAdminDrawer() {
-            const drawer = document.getElementById('admin-drawer');
-            drawer.classList.toggle('translate-x-full');
-            renderLeads();
-        }
-
-        function clearLeads() {
-            if (confirm('Are you sure you want to clear all stored student leads?')) {
-                localStorage.removeItem('ok_korean_leads');
-                updateLeadBadge();
-                renderLeads();
-            }
-        }
-
-        // Initialize Lead Counter on Page Load
-        updateLeadBadge();
-    </script>
+})();
+</script>
 </body>
 </html>
