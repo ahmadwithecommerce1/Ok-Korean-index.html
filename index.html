@@ -6,8 +6,215 @@
     <title>OK Korean Language Centre | Pakistan's Famous Korean Language Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <!-- Added DotGothic16 for TRUE Dot Matrix Text Effect -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;800&family=Share+Tech+Mono&family=DotGothic16&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Custom CSS for the Airport Board -->
+    <style>
+        .airport-board-wrapper {
+            background-color: #0d1117;
+            padding: 4rem 1rem; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .status-board {
+            background: #000000; 
+            border: 2px solid #333;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            width: 100%;
+            max-width: 1000px; /* Thora bara kiya taake TV/Laptop par acha lage */
+            overflow: hidden;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .board-header {
+            background: #111;
+            padding: 15px 20px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            color: #ccc;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .board-header h1 {
+            font-size: 1.2rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .dot-matrix-header {
+            font-family: 'DotGothic16', sans-serif;
+            font-size: 1.2rem;
+            color: #38bdf8;
+        }
+
+        /* Columns Layout (Desktop / Laptop / TV) */
+        .board-grid, .data-row {
+            display: grid;
+            /* Signal | Applicants | Destination/Program | Status */
+            grid-template-columns: 80px 130px 1fr 150px;
+            gap: 15px;
+            padding: 10px 20px;
+            align-items: center;
+        }
+
+        .board-grid {
+            color: #888;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-bottom: 1px solid #222;
+            padding-bottom: 10px;
+            padding-top: 10px;
+        }
+
+        .board-body {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 10px;
+            padding-bottom: 80px; /* WhatsApp button ke liye jagah */
+        }
+
+        .data-row {
+            font-family: 'DotGothic16', sans-serif;
+            font-size: 1.4rem;
+            margin: 0 10px;
+        }
+
+        /* =========================================
+           TRUE DOT MATRIX BOX & TEXT EFFECT
+           ========================================= */
+        .box {
+            background-color: #050505; 
+            border: 1px solid #222;
+            border-radius: 3px;
+            padding: 10px 12px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Dots Grid */
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 3px 3px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Text Styles */
+        .number-col { 
+            color: #eab308; 
+            letter-spacing: 2px;
+            z-index: 2; 
+        }
+        
+        .dest-col { 
+            color: #ffffff; 
+            letter-spacing: 1px;
+            z-index: 2; 
+            white-space: nowrap; /* Text ko ek line mein rakhega */
+        }
+        
+        .status-col { 
+            letter-spacing: 1px;
+            z-index: 2; 
+        }
+
+        /* Colors for Status */
+        .status-active { color: #22c55e; text-shadow: 0 0 5px rgba(34, 197, 94, 0.4); }
+        .status-non-active { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+
+        /* LEDs */
+        .led-indicator {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            justify-content: flex-start;
+            padding-left: 5px;
+        }
+
+        .led {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #222;
+        }
+
+        .led-red-fade {
+            background: #ef4444;
+            animation: blinkRed 1.5s infinite;
+        }
+
+        .led-green-fade {
+            background: #22c55e;
+            animation: blinkGreen 1.5s infinite 0.5s;
+        }
+
+        @keyframes blinkRed {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px #ef4444; }
+            50% { opacity: 0.2; box-shadow: none; }
+        }
+
+        @keyframes blinkGreen {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px #22c55e; }
+            50% { opacity: 0.2; box-shadow: none; }
+        }
+
+        /* =========================================
+           PERFECT RESPONSIVE ALIGNMENT (Mobile & Tablet)
+           ========================================= */
+        @media (max-width: 768px) {
+            .board-grid, .data-row {
+                /* Shrink columns for mobile to fit perfectly */
+                grid-template-columns: 50px 90px 1fr 90px;
+                gap: 6px;
+                padding: 8px 10px;
+            }
+
+            .box {
+                padding: 8px 6px;
+            }
+
+            /* Smaller font on mobile but still Dot Matrix */
+            .data-row {
+                font-size: 1rem; 
+            }
+
+            /* Allow text to wrap on mobile if needed, but keep aligned */
+            .dest-col {
+                white-space: normal; 
+                font-size: 0.9rem;
+            }
+
+            .status-col {
+                font-size: 0.85rem;
+            }
+
+            .board-header h1 { font-size: 1rem; }
+            .dot-matrix-header { font-size: 0.9rem; }
+            
+            .board-body {
+                padding-bottom: 100px; /* Extra space for WhatsApp on mobile */
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -130,7 +337,76 @@
         </div>
     </section>
 
-    <!-- 2. NEW SECTION: OUR PROCESS (To make it lengthy) -->
+    <!-- NEW SECTION: DASHBOARD -->
+    <div class="airport-board-wrapper">
+        <div class="status-board">
+            
+            <!-- Header -->
+            <div class="board-header">
+                <h1>DEPARTURES: KOREA & OEC</h1>
+                <div class="dot-matrix-header">LIVE</div>
+            </div>
+
+            <!-- Columns -->
+            <div class="board-grid">
+                <div>Signal</div>
+                <div>Applicants</div>
+                <div>Destination / Program</div>
+                <div>Status</div>
+            </div>
+
+            <!-- Data Rows -->
+            <div class="board-body">
+                
+                <!-- Row 1: OEC (NON-ACTIVE) -->
+                <div class="data-row">
+                    <div class="led-indicator">
+                        <div class="led led-red-fade"></div> 
+                        <div class="led"></div> 
+                    </div>
+                    <div class="box number-col">0000</div>
+                    <div class="box dest-col">OEC BALLOTING</div>
+                    <div class="box status-col status-non-active">NON-ACTIVE</div>
+                </div>
+
+                <!-- Row 2: SKILL TEST (ACTIVE) -->
+                <div class="data-row">
+                    <div class="led-indicator">
+                        <div class="led led-green-fade"></div> 
+                        <div class="led led-green-fade"></div> 
+                    </div>
+                    <div class="box number-col">0150</div>
+                    <div class="box dest-col">SKILL TEST PREP</div>
+                    <div class="box status-col status-active">ACTIVE</div>
+                </div>
+
+                <!-- Row 3: EPS TOPIK (ACTIVE) -->
+                <div class="data-row">
+                    <div class="led-indicator">
+                        <div class="led led-red-fade"></div>
+                        <div class="led led-green-fade"></div>
+                    </div>
+                    <div class="box number-col">0450</div>
+                    <div class="box dest-col">EPS TOPIK</div>
+                    <div class="box status-col status-active">ACTIVE</div>
+                </div>
+
+                <!-- Row 4: VISA GUIDANCE (ACTIVE) -->
+                <div class="data-row">
+                    <div class="led-indicator">
+                        <div class="led led-red-fade"></div>
+                        <div class="led led-green-fade"></div>
+                    </div>
+                    <div class="box number-col">0080</div>
+                    <div class="box dest-col">VISA GUIDANCE</div>
+                    <div class="box status-col status-active">ACTIVE</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. NEW SECTION: OUR PROCESS -->
     <section class="section process-section" id="process">
         <div class="container">
             <div class="section-header reveal-up">
