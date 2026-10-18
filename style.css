@@ -295,9 +295,32 @@ ul { list-style: none; }
 
 .team-section { background: var(--bg-secondary); }
 .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
-.team-card { display: flex; gap: 2rem; background: var(--bg-primary); padding: 2.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow); border: 1px solid var(--border-color); transition: transform 0.3s; }
+.team-card { 
+    display: flex; 
+    gap: 2rem; 
+    background: var(--bg-primary); 
+    padding: 2.5rem; 
+    border-radius: var(--radius-lg); 
+    box-shadow: var(--shadow); 
+    border: 1px solid var(--border-color); 
+    transition: transform 0.3s; 
+}
 .team-card:hover { transform: translateY(-5px); }
-.team-avatar { width: 100px; height: 100px; border-radius: 50%; background: var(--navy); color: white; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: bold; font-family: var(--font-heading); flex-shrink: 0; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+.team-avatar { 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    background: var(--navy); 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 2.5rem; 
+    font-weight: bold; 
+    font-family: var(--font-heading); 
+    flex-shrink: 0; 
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+}
 .team-info h4 { font-family: var(--font-heading); font-size: 1.6rem; margin-bottom: 0.2rem; color: var(--text-primary); }
 .team-info span { font-size: 0.9rem; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
 .team-info p { margin-top: 1rem; font-size: 0.95rem; color: var(--text-secondary); }
@@ -371,12 +394,31 @@ ul { list-style: none; }
     }
 }
 
+/* =========================================
+   FIX: TEAM SECTION ON MOBILE
+   ========================================= */
 @media (max-width: 992px) {
     .hero-grid, .flyer-grid, .team-grid, .inquiry-form, .footer-grid { grid-template-columns: 1fr; }
     .hero-card { padding: 2rem; margin-top: 2rem; }
     .flyer-box { padding: 2rem; margin-top: 0; }
     .inquiry-box { padding: 2rem; }
     .hero-title { font-size: 3rem; }
+
+    /* Team Card Mobile Fix */
+    .team-card {
+        flex-direction: column; /* Avatar upar, text neeche */
+        text-align: center;
+        padding: 2rem 1.5rem;
+    }
+    .team-avatar {
+        margin: 0 auto 1rem auto; /* Avatar ko center karne ke liye */
+    }
+    .team-info {
+        width: 100%;
+    }
+    .team-info h4 {
+        font-size: 1.4rem;
+    }
 }
 
 @media (max-width: 480px) {

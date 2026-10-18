@@ -6,12 +6,21 @@
     <title>OK Korean Language Centre | Pakistan's Famous Korean Language Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Added DotGothic16 for TRUE Dot Matrix Text Effect -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;800&family=Share+Tech+Mono&family=DotGothic16&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
     <!-- Custom CSS for the Airport Board -->
     <style>
+        /* =========================================
+           RGB COLOR CHANGING BORDER ANIMATION
+           ========================================= */
+        @keyframes rgbBorder {
+            0% { border-color: #ff2a2a; box-shadow: 0 0 15px rgba(255, 42, 42, 0.4), inset 0 0 15px rgba(255, 42, 42, 0.1); }
+            33% { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), inset 0 0 15px rgba(0, 229, 255, 0.1); }
+            66% { border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.4), inset 0 0 15px rgba(34, 197, 94, 0.1); }
+            100% { border-color: #ff2a2a; box-shadow: 0 0 15px rgba(255, 42, 42, 0.4), inset 0 0 15px rgba(255, 42, 42, 0.1); }
+        }
+
         .airport-board-wrapper {
             background-color: #0d1117;
             padding: 4rem 1rem; 
@@ -22,11 +31,11 @@
 
         .status-board {
             background: #000000; 
-            border: 2px solid #333;
-            border-radius: 4px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            border: 2px solid #00e5ff; 
+            animation: rgbBorder 4s linear infinite; 
+            border-radius: 8px;
             width: 100%;
-            max-width: 1000px; /* Thora bara kiya taake TV/Laptop par acha lage */
+            max-width: 1000px; 
             overflow: hidden;
             position: relative;
             padding-bottom: 10px;
@@ -35,7 +44,7 @@
         .board-header {
             background: #111;
             padding: 15px 20px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -49,18 +58,19 @@
             font-size: 1.2rem;
             margin: 0;
             font-weight: 600;
+            color: #eab308;
         }
 
         .dot-matrix-header {
             font-family: 'DotGothic16', sans-serif;
             font-size: 1.2rem;
-            color: #38bdf8;
+            color: var(--neon-blue);
+            text-shadow: 0 0 8px var(--neon-blue);
         }
 
-        /* Columns Layout (Desktop / Laptop / TV) */
+        /* Columns Layout */
         .board-grid, .data-row {
             display: grid;
-            /* Signal | Applicants | Destination/Program | Status */
             grid-template-columns: 80px 130px 1fr 150px;
             gap: 15px;
             padding: 10px 20px;
@@ -73,9 +83,13 @@
             font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 10px;
             padding-top: 10px;
+        }
+
+        .board-grid div:nth-child(2), .board-grid div:nth-child(4) {
+            text-align: center; 
         }
 
         .board-body {
@@ -83,7 +97,7 @@
             flex-direction: column;
             gap: 8px;
             padding-top: 10px;
-            padding-bottom: 80px; /* WhatsApp button ke liye jagah */
+            padding-bottom: 80px; 
         }
 
         .data-row {
@@ -92,22 +106,25 @@
             margin: 0 10px;
         }
 
-        /* =========================================
-           TRUE DOT MATRIX BOX & TEXT EFFECT
-           ========================================= */
+        /* TRUE DOT MATRIX BOX */
         .box {
             background-color: #050505; 
-            border: 1px solid #222;
-            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
             padding: 10px 12px;
             height: 100%;
             display: flex;
             align-items: center;
+            justify-content: center; 
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        /* Background Dots Grid */
+        .box:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
         .box::before {
             content: '';
             position: absolute;
@@ -118,36 +135,37 @@
             z-index: 1;
         }
 
-        /* Text Styles */
         .number-col { 
             color: #eab308; 
             letter-spacing: 2px;
             z-index: 2; 
+            text-align: center; 
         }
         
         .dest-col { 
             color: #ffffff; 
             letter-spacing: 1px;
             z-index: 2; 
-            white-space: nowrap; /* Text ko ek line mein rakhega */
+            white-space: nowrap; 
+            text-align: center; 
         }
         
         .status-col { 
             letter-spacing: 1px;
             z-index: 2; 
+            text-align: center; 
+            font-weight: bold;
         }
 
-        /* Colors for Status */
-        .status-active { color: #22c55e; text-shadow: 0 0 5px rgba(34, 197, 94, 0.4); }
-        .status-non-active { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.4); }
+        .status-active { color: #22c55e; text-shadow: 0 0 5px rgba(34, 197, 94, 0.6); }
+        .status-non-active { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.6); }
 
         /* LEDs */
         .led-indicator {
             display: flex;
             gap: 8px;
             align-items: center;
-            justify-content: flex-start;
-            padding-left: 5px;
+            justify-content: center; 
         }
 
         .led {
@@ -157,15 +175,8 @@
             background: #222;
         }
 
-        .led-red-fade {
-            background: #ef4444;
-            animation: blinkRed 1.5s infinite;
-        }
-
-        .led-green-fade {
-            background: #22c55e;
-            animation: blinkGreen 1.5s infinite 0.5s;
-        }
+        .led-red-fade { background: #ef4444; animation: blinkRed 1.5s infinite; }
+        .led-green-fade { background: #22c55e; animation: blinkGreen 1.5s infinite 0.5s; }
 
         @keyframes blinkRed {
             0%, 100% { opacity: 1; box-shadow: 0 0 8px #ef4444; }
@@ -178,41 +189,22 @@
         }
 
         /* =========================================
-           PERFECT RESPONSIVE ALIGNMENT (Mobile & Tablet)
+           PERFECT RESPONSIVE ALIGNMENT
            ========================================= */
         @media (max-width: 768px) {
             .board-grid, .data-row {
-                /* Shrink columns for mobile to fit perfectly */
                 grid-template-columns: 50px 90px 1fr 90px;
                 gap: 6px;
                 padding: 8px 10px;
             }
 
-            .box {
-                padding: 8px 6px;
-            }
-
-            /* Smaller font on mobile but still Dot Matrix */
-            .data-row {
-                font-size: 1rem; 
-            }
-
-            /* Allow text to wrap on mobile if needed, but keep aligned */
-            .dest-col {
-                white-space: normal; 
-                font-size: 0.9rem;
-            }
-
-            .status-col {
-                font-size: 0.85rem;
-            }
-
+            .box { padding: 8px 6px; }
+            .data-row { font-size: 1rem; }
+            .dest-col { white-space: normal; font-size: 0.9rem; }
+            .status-col { font-size: 0.85rem; }
             .board-header h1 { font-size: 1rem; }
             .dot-matrix-header { font-size: 0.9rem; }
-            
-            .board-body {
-                padding-bottom: 100px; /* Extra space for WhatsApp on mobile */
-            }
+            .board-body { padding-bottom: 100px; }
         }
     </style>
 </head>
@@ -238,7 +230,7 @@
     <div class="announcement-bar">
         <div class="marquee-container">
             <div class="marquee-content">
-                🚨 Admissions Open for New Batch - Enroll Now! &nbsp; | &nbsp; ⭐ Special EPS-TOPIK Preparation Classes Starting Soon &nbsp; | &nbsp; 🇰🇷 4.5 Lakh Package Jobs in Korea &nbsp; | &nbsp; 🎓 NUML University & OEC 18 Month Course
+                🚨 Admissions Open for New Batch - Enroll Now! &nbsp; | &nbsp; ⭐ Special EPS-TOPIK Preparation Classes Starting Soon &nbsp; | &nbsp; 🇰🇷 4.5 Lakh Package Jobs in Korea &nbsp; | &nbsp; 🎓 NUML University & OEC 18 Years of Experience.
             </div>
         </div>
     </div>
@@ -328,7 +320,7 @@
                     <p><strong>4.5 Lakh Package</strong><br><span style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">(Salary + Overtime + Bonus + Food Allowance)</span></p>
                     
                     <ul>
-                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg> NUML University & OEC 18 Month Course</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg> NUML University & OEC 18 Years of Experience</li>
                         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Complete EPS-Topik & Skill Test Prep</li>
                         <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Evening Classes for Job Holders</li>
                     </ul>
@@ -337,13 +329,13 @@
         </div>
     </section>
 
-    <!-- NEW SECTION: DASHBOARD -->
+    <!-- NEW SECTION: DASHBOARD WITH RGB BORDER -->
     <div class="airport-board-wrapper">
         <div class="status-board">
             
             <!-- Header -->
             <div class="board-header">
-                <h1>DEPARTURES: KOREA & OEC</h1>
+                <h1>Info of KOREA & OEC</h1>
                 <div class="dot-matrix-header">LIVE</div>
             </div>
 
@@ -375,7 +367,7 @@
                         <div class="led led-green-fade"></div> 
                         <div class="led led-green-fade"></div> 
                     </div>
-                    <div class="box number-col">0150</div>
+                    <div class="box number-col">Pending</div>
                     <div class="box dest-col">SKILL TEST PREP</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
@@ -397,7 +389,7 @@
                         <div class="led led-red-fade"></div>
                         <div class="led led-green-fade"></div>
                     </div>
-                    <div class="box number-col">0080</div>
+                    <div class="box number-col">5600</div>
                     <div class="box dest-col">VISA GUIDANCE</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
@@ -527,13 +519,13 @@
                     <div class="team-info">
                         <h4>Sir Farrukh Shahzad</h4>
                         <span>CEO / Director</span>
-                        <p>Leading the institute since 2006 with a vision to provide world-class Korean language education to Pakistani students. Contact: 0322-4525389</p>
+                        <p>Leading the institute since 2006 with a vision to provide world-class Korean language education to Pakistani students.</p>
                     </div>
                 </div>
                 <div class="team-card reveal-up" style="transition-delay: 0.1s;">
                     <div class="team-avatar" style="background: var(--accent);">MA</div>
                     <div class="team-info">
-                        <h4>Sir Muhammad Ahmad</h4>
+                        <h4>Sir Muhammad Makhdoom</h4>
                         <span>Senior Instructor</span>
                         <p>Expert in Korean grammar, conversation, and EPS-TOPIK preparation. Dedicated to student success and language fluency.</p>
                     </div>
@@ -596,6 +588,21 @@
         </div>
     </section>
 
+    <!-- 7. MAP SECTION -->
+    <section class="section map-section" id="location" style="padding-top: 0;">
+        <div class="container">
+            <div class="section-header reveal-up">
+                <span class="section-label">Visit Us</span>
+                <h2 class="section-title">Our Location</h2>
+                <p class="section-desc">G8FF+6RF, Lahore – Kasur Rd, Ichhra Shershah Colony, Lahore, 54000</p>
+            </div>
+            <!-- Google Map Embed -->
+            <div class="map-container reveal-up" style="border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--border-color);">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3402.6215172536144!2d74.3195754!3d31.532715999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919046e2bd6d9eb%3A0xc6d7b70cf8e2f7b2!2sIchhra%20Shershah%20Colony%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1700000000000!5m2!1sen!2s" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
     <!-- FOOTER -->
     <footer class="site-footer">
         <div class="container">
@@ -610,7 +617,7 @@
                     </a>
                     <p class="footer-desc">Pakistan's most trusted institute for Korean language and EPS-TOPIK preparation. Serving the world through the human resource of Pakistan.</p>
                     <p style="margin-top: 1.5rem; color: rgba(255,255,255,0.7); font-size: 0.95rem; line-height: 1.8;">
-                        <strong>Address:</strong> Nizampura Sharifia, Faisalabad <br> (Near Old National Bank, Lahore Branch)<br>
+                        <strong>Address:</strong> G8FF+6RF, Lahore – Kasur Rd, <br>Ichhra Shershah Colony, Lahore, 54000<br>
                         <strong>Ph:</strong> 0322-8082676 | 0308-4040422 | 0322-4525389
                     </p>
                 </div>
