@@ -1,12 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     
     /* =========================================
-       1. PRE-LOADER (Loading Screen)
+       1. PRE-LOADER (Loading Screen Fix)
        ========================================= */
     const preloader = document.getElementById('preloader');
+    
     window.addEventListener('load', () => {
         setTimeout(() => {
-            if (preloader) preloader.classList.add('fade-out');
+            if (preloader) {
+                preloader.classList.add('fade-out');
+            }
         }, 2000); 
     });
 
@@ -228,4 +231,70 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /* =========================================
+       11. TYPEWRITER NOTICE ANIMATION
+       ========================================= */
+    const typewriterElement = document.getElementById('typewriter-text');
+    
+    const messages = [
+        "Initializing secure connection to OK Korean Academy...",
+        "OEC Balloting Status: Currently NON-ACTIVE. Standby for updates.",
+        "Skill Test Preparation: ACTIVE. Batch 0150 registration is open.",
+        "EPS TOPIK Language Course: ACTIVE. 450+ students enrolled.",
+        "Visa Guidance Services: ACTIVE. Free consultation available.",
+        "Latest Update: NUML University 18-Month Program admissions open.",
+        "Stay tuned for live OEC and Academy information."
+    ];
+
+    let messageIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typeSpeed = 50;
+
+    function typeWriter() {
+        if (!typewriterElement) return;
+
+        const currentMessage = messages[messageIndex];
+
+        if (isDeleting) {
+            typewriterElement.textContent = currentMessage.substring(0, charIndex - 1);
+            charIndex--;
+            typeSpeed = 20;
+        } else {
+            typewriterElement.textContent = currentMessage.substring(0, charIndex + 1);
+            charIndex++;
+            typeSpeed = 50;
+        }
+
+        if (!isDeleting && charIndex === currentMessage.length) {
+            isDeleting = true;
+            typeSpeed = 2000;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            messageIndex++;
+            if (messageIndex >= messages.length) {
+                messageIndex = 0; 
+            }
+            typeSpeed = 500;
+        }
+
+        setTimeout(typeWriter, typeSpeed);
+    }
+
+    setTimeout(typeWriter, 2500);
+
+    /* =========================================
+       12. GENERATE LED MATRIX DOTS VIA JAVASCRIPT
+       ========================================= */
+    const matrixLEDs = document.querySelectorAll('.matrix-led');
+    
+    matrixLEDs.forEach(led => {
+        // Create 9 dots for a 3x3 grid inside each LED
+        for (let i = 0; i < 9; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            led.appendChild(dot);
+        }
+    });
 });
