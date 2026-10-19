@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* =========================================
-       11. TYPEWRITER NOTICE ANIMATION
+       11. TYPEWRITER NOTICE ANIMATION (CURSOR SATH CHALEGA)
        ========================================= */
     const typewriterElement = document.getElementById('typewriter-text');
     
@@ -250,22 +250,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let messageIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
-    let typeSpeed = 50;
+    let typeSpeed = 30;
 
     function typeWriter() {
         if (!typewriterElement) return;
 
         const currentMessage = messages[messageIndex];
+        let displayText = "";
 
         if (isDeleting) {
-            typewriterElement.textContent = currentMessage.substring(0, charIndex - 1);
             charIndex--;
-            typeSpeed = 20;
+            typeSpeed = 15; 
         } else {
-            typewriterElement.textContent = currentMessage.substring(0, charIndex + 1);
             charIndex++;
-            typeSpeed = 50;
+            typeSpeed = 30; 
         }
+
+        displayText = currentMessage.substring(0, charIndex);
+        
+        // Cursor (|) ko text ke sath sath daal diya
+        typewriterElement.innerHTML = displayText + '<span class="cursor">|</span>';
 
         if (!isDeleting && charIndex === currentMessage.length) {
             isDeleting = true;
@@ -282,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(typeWriter, typeSpeed);
     }
 
-    setTimeout(typeWriter, 2500);
+    setTimeout(typeWriter, 1000);
 
     /* =========================================
        12. GENERATE 12x12 LED MATRIX DOTS VIA JAVASCRIPT
@@ -290,7 +294,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const matrixLEDs = document.querySelectorAll('.matrix-led');
     
     matrixLEDs.forEach(led => {
-        // Ek dot pehle se HTML mein hai, baaki 143 dots generate karo (12x12 = 144)
         for (let i = 0; i < 143; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');

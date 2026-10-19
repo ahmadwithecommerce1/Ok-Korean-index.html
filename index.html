@@ -204,7 +204,7 @@
         /* Red Glow - Border Hamesha Solid Rahega */
         .matrix-led.red-glow .dot {
             background-color: #ff2a2a;
-            animation: dotSquare 1s infinite steps(1);
+            animation: dotSquare 3s infinite steps(1);
         }
         .matrix-led.red-glow {
             border-color: rgba(255,42,42,0.8) !important;
@@ -214,7 +214,7 @@
         /* Green Glow - Border Hamesha Solid Rahega */
         .matrix-led.green-glow .dot {
             background-color: #22c55e;
-            animation: dotSquare 1s infinite steps(1);
+            animation: dotSquare 3s infinite steps(1);
         }
         .matrix-led.green-glow {
             border-color: rgba(34,197,94,0.8) !important;
@@ -234,34 +234,34 @@
            NEW ANIMATIONS FOR SPECIFIC ROWS
            ========================================= */
 
-        /* 1. Dono LEDs Fade In/Out (Skill Test) - Border Solid Rahega */
+        /* 1. Dono LEDs Fade In/Out (Skill Test) - Slow Speed */
         .led-fade-both .matrix-led .dot {
-            animation: fadeDotOnly 2s infinite ease-in-out;
+            animation: fadeDotOnly 3s infinite ease-in-out; 
         }
 
         @keyframes fadeDotOnly {
             0%, 100% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50% { background-color: #111; box-shadow: none; opacity: 0.3; }
+            50% { background-color: #111; box-shadow: none; opacity: 0.1; } 
         }
 
-        /* 2. Left Red, Right Green Alternate (EPS & Visa) */
+        /* 2. Left Red, Right Green Alternate (EPS & Visa) - Slow Speed */
         .led-alternate-red-green .matrix-led:nth-child(1) .dot {
-            animation: alternateDotRedOnly 3s infinite;
+            animation: alternateDotRedOnly 1.9s infinite; 
         }
 
         .led-alternate-red-green .matrix-led:nth-child(2) .dot {
-            animation: alternateDotGreenOnly 3s infinite 1.5s; /* 1.5s delay */
+            animation: alternateDotGreenOnly 1.9s infinite 2s; 
         }
 
         /* Keyframes for Dots Only */
         @keyframes alternateDotRedOnly {
             0%, 49% { background-color: #ff2a2a; box-shadow: 0 0 4px #ff2a2a; opacity: 1; }
-            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.3; }
+            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.1; }
         }
 
         @keyframes alternateDotGreenOnly {
             0%, 49% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.3; }
+            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.1; }
         }
 
         /* Keyframes for standard blink */
@@ -271,7 +271,7 @@
         }
 
         /* =========================================
-           NEW: TYPEWRITER NOTICE BOARD STYLES
+           NEW: TYPEWRITER NOTICE BOARD STYLES (FIXED CURSOR)
            ========================================= */
         .typewriter-notice-wrapper {
             max-width: 1000px;
@@ -339,11 +339,14 @@
             flex: 1; 
         }
 
+        /* UPDATED: Cursor ko text ke sath inline rakhne ke liye */
         .cursor {
+            display: inline-block;
             color: var(--neon-blue);
-            animation: blinkCursor 1s infinite;
             font-weight: bold;
-            margin-left: 2px; 
+            margin-left: 2px;
+            vertical-align: bottom;
+            animation: blinkCursor 1s infinite;
         }
 
         @keyframes blinkCursor {
@@ -524,7 +527,8 @@
         </div>
         <div class="terminal-body">
             <span class="prompt">></span>
-            <span id="typewriter-text"></span><span class="cursor">_</span>
+            <!-- Yahan HTML se cursor hata kar JS mein handle kiya hai taake text ke sath chale -->
+            <span id="typewriter-text"></span>
         </div>
     </div>
 
