@@ -285,13 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(typeWriter, 2500);
 
     /* =========================================
-       12. GENERATE LED MATRIX DOTS VIA JAVASCRIPT
+       12. GENERATE 12x12 LED MATRIX DOTS VIA JAVASCRIPT
        ========================================= */
     const matrixLEDs = document.querySelectorAll('.matrix-led');
     
     matrixLEDs.forEach(led => {
-        // Create 9 dots for a 3x3 grid inside each LED
-        for (let i = 0; i < 9; i++) {
+        // Ek dot pehle se HTML mein hai, baaki 143 dots generate karo (12x12 = 144)
+        for (let i = 0; i < 143; i++) {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             led.appendChild(dot);
