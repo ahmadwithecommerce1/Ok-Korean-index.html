@@ -137,10 +137,30 @@
 
         .number-col { color: #eab308; letter-spacing: 2px; z-index: 2; text-align: center; }
         .dest-col { color: #ffffff; letter-spacing: 1px; z-index: 2; white-space: nowrap; text-align: center; }
-        .status-col { letter-spacing: 1px; z-index: 2; text-align: center; font-weight: bold; }
+        .status-col { letter-spacing: 1px; z-index: 2; text-align: center; }
 
-        .status-active { color: #22c55e; text-shadow: 0 0 5px rgba(34, 197, 94, 0.6); }
-        .status-non-active { color: #ef4444; text-shadow: 0 0 5px rgba(239, 68, 68, 0.6); }
+        /* UPDATED: FONT NORMAL, NO SHADOW */
+        .status-active { 
+            animation: activeColorCycle 3s infinite; 
+            text-shadow: none !important; /* Blur khatam */
+            font-weight: 400 !important; /* Non-bold */
+        }
+        .status-non-active { 
+            animation: nonActiveColorCycle 3s infinite; 
+            text-shadow: none !important; /* Blur khatam */
+            font-weight: 400 !important; /* Non-bold */
+        }
+
+        @keyframes activeColorCycle {
+            0%, 100% { color: #eab308; } /* Yellow */
+            50% { color: #22c55e; }      /* Green */
+        }
+
+        @keyframes nonActiveColorCycle {
+            0%, 100% { color: #ef4444; } /* Red */
+            50% { color: #ffffff; }      /* White */
+        }
+        /* ========================================= */
 
         /* =========================================
            TRUE HTML-BASED DOT MATRIX LEDs (CSS)
