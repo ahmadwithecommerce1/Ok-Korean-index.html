@@ -175,7 +175,7 @@
         /* ========================================= */
 
         /* =========================================
-           UPDATED: 12x12 SQUARE FAST LED
+           UPDATED: 12x12 SQUARE FAST LED (FIXED BORDERS)
            ========================================= */
         .led-indicator {
             display: flex;
@@ -185,101 +185,82 @@
         }
 
         .matrix-led {
-            width: 24px; /* Chota Size */
-            height: 24px;
+            width: 26px; 
+            height: 26px;
             border-radius: 0px; /* Perfect Square */
-            background-color: #0a0a0a;
-            border: 1px solid #222;
+            background-color: #050505;
+            border: 1px solid #333;
             
             /* 12x12 Grid */
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             grid-template-rows: repeat(12, 1fr);
             
-            padding: 2px; /* Kam padding taake dots fit hon */
-            gap: 1px;     /* Bareek gap */
+            padding: 3px; 
+            gap: 1px;     
             
-            box-shadow: inset 0 0 5px rgba(0,0,0,1);
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
             position: relative;
             overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Dots Base */
+        /* Dots Base - Perfect Square */
         .matrix-led .dot {
             width: 100%;
             height: 100%;
             border-radius: 0px; /* Square Dots */
-            background-color: #111;
+            background-color: #444; /* Light grey so grid is visible on off state */
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Red Glow - Border Hamesha Solid Rahega */
-        .matrix-led.red-glow .dot {
-            background-color: #ff2a2a;
-            animation: dotSquare 3s infinite steps(1);
-        }
+        /* Red Glow Border (Fixed, No Blink) */
         .matrix-led.red-glow {
-            border-color: rgba(255,42,42,0.8) !important;
-            box-shadow: inset 0 0 3px rgba(0,0,0,1), 0 0 10px rgba(255,42,42,0.8) !important;
+            border-color: #ff2a2a;
+            box-shadow: inset 0 0 3px rgba(255,42,42,0.3), 0 0 10px rgba(255,42,42,0.6);
         }
-
-        /* Green Glow - Border Hamesha Solid Rahega */
-        .matrix-led.green-glow .dot {
-            background-color: #22c55e;
-            animation: dotSquare 3s infinite steps(1);
-        }
+        
+        /* Green Glow Border (Fixed, No Blink) */
         .matrix-led.green-glow {
-            border-color: rgba(34,197,94,0.8) !important;
-            box-shadow: inset 0 0 3px rgba(0,0,0,1), 0 0 10px rgba(34,197,94,0.8) !important;
+            border-color: #22c55e;
+            box-shadow: inset 0 0 3px rgba(34,197,94,0.3), 0 0 10px rgba(34,197,94,0.6);
         }
 
-        /* Off State */
-        .matrix-led.off .dot {
-            background-color: #1a1a1a;
-        }
+        /* Off State Border */
         .matrix-led.off {
-            border-color: #222;
-            box-shadow: inset 0 0 5px rgba(0,0,0,1);
+            border-color: #666; /* Visible border */
+        }
+        .matrix-led.off .dot {
+            background-color: #444; /* Visible grid dots */
         }
 
         /* =========================================
-           NEW ANIMATIONS FOR SPECIFIC ROWS
+           ROW SPECIFIC ANIMATIONS (Dots Only)
            ========================================= */
 
-        /* 1. Dono LEDs Fade In/Out (Skill Test) - Slow Speed */
+        /* 1. Dono LEDs Fade In/Out (Skill Test) */
         .led-fade-both .matrix-led .dot {
             animation: fadeDotOnly 2.5s infinite ease-in-out; 
         }
-
         @keyframes fadeDotOnly {
             0%, 100% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50% { background-color: #111; box-shadow: none; opacity: 0.1; } 
+            50% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
         }
 
-        /* 2. Left Red, Right Green Alternate (EPS & Visa) - Slow Speed */
+        /* 2. Left Red, Right Green Alternate (EPS & Visa) */
         .led-alternate-red-green .matrix-led:nth-child(1) .dot {
-            animation: alternateDotRedOnly 5s infinite; 
+            animation: alternateDotRedOnly 4s infinite; 
         }
-
         .led-alternate-red-green .matrix-led:nth-child(2) .dot {
-            animation: alternateDotGreenOnly 5s infinite 2s; 
+            animation: alternateDotGreenOnly 4s infinite 2s; 
         }
-
-        /* Keyframes for Dots Only */
         @keyframes alternateDotRedOnly {
             0%, 49% { background-color: #ff2a2a; box-shadow: 0 0 4px #ff2a2a; opacity: 1; }
-            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.1; }
+            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
         }
-
         @keyframes alternateDotGreenOnly {
             0%, 49% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50%, 100% { background-color: #111; box-shadow: none; opacity: 0.1; }
-        }
-
-        /* Keyframes for standard blink */
-        @keyframes dotSquare {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.1; }
+            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
         }
 
         /* =========================================
