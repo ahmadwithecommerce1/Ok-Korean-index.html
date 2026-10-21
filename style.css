@@ -199,7 +199,7 @@ ul { list-style: none; }
 .terminal-body { padding: 15px 20px; color: var(--neon-blue); font-size: 1rem; letter-spacing: 0.5px; display: flex; align-items: flex-start; min-height: 55px; background: linear-gradient(90deg, rgba(0, 229, 255, 0.05) 0%, transparent 100%); line-height: 1.5; }
 .prompt { color: var(--accent); margin-right: 10px; font-weight: bold; margin-top: 2px; }
 #typewriter-text { color: var(--ivory); text-shadow: 0 0 5px rgba(255,255,255,0.3); word-wrap: break-word; flex: 1; }
-.cursor { color: var(--neon-blue); animation: blinkCursor 1s infinite; font-weight: bold; margin-left: 2px; }
+.cursor { color: var(--neon-blue); animation: blinkCursor 1s infinite; font-weight: bold; margin-left: 2px; display: inline-block; vertical-align: bottom;}
 @keyframes blinkCursor { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
 /* =========================================
@@ -323,13 +323,22 @@ ul { list-style: none; }
 .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
 
 /* =========================================
-   RESPONSIVE FIXES
+   RESPONSIVE FIXES (UPDATED FOR MOBILE NAV)
    ========================================= */
 @media (max-width: 950px) {
-    .desktop-nav { display: none; }
+    /* Yahan desktop nav ko hide NAHI kiya, taake mobile pe bhi nazar aaye */
+    .desktop-nav { 
+        display: flex; 
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
+    .nav-links { 
+        display: none; /* Mobile menu ke liye links hide kar diye hain */
+    }
     .mobile-menu-btn { display: flex; }
-    .live-time-widget { display: none; }
 }
+
 @media (max-width: 850px) {
     .header-inner { height: 75px; padding: 0 1rem; }
     .logo-title { font-size: 1.1rem; }
@@ -352,6 +361,7 @@ ul { list-style: none; }
     
     .matrix-led { width: 18px; height: 18px; padding: 1px; }
 }
+
 @media (max-width: 992px) {
     .hero-grid, .flyer-grid, .team-grid, .inquiry-form, .footer-grid { grid-template-columns: 1fr; }
     .hero-card { padding: 2rem; margin-top: 2rem; }
@@ -363,10 +373,38 @@ ul { list-style: none; }
     .team-info { width: 100%; }
     .team-info h4 { font-size: 1.4rem; }
 }
+
+@media (max-width: 768px) {
+    /* Mobile par navigation links show karne ke liye */
+    .desktop-nav {
+        display: none; /* Agar aap chahte hain mobile par bhi desktop nav dikhe to isko 'flex' karein. Par mobile menu mein links hain, isliye hide kiya hai */
+    }
+    .nav-links {
+        display: flex;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0.5rem 0;
+    }
+    .nav-link {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    /* Live time widget aur apply btn ko mobile par chota kar diya */
+    .header-actions { gap: 0.5rem; }
+    .live-time-widget { display: flex; min-width: auto; padding: 4px 8px; height: 32px; }
+    .time-display { font-size: 0.7rem; gap: 4px; }
+    .time-flag { font-size: 0.55rem; padding: 1px 4px; }
+    .apply-btn-header { display: inline-flex; padding: 0.3rem 0.8rem; font-size: 0.7rem; }
+    .theme-toggle { width: 32px; height: 32px; }
+}
+
 @media (max-width: 480px) {
     .header-inner { gap: 5px; }
     .logo-text-wrapper { display: none; }
-    .apply-btn-header { display: none; }
+    /* Apply button ko mobile par bhi rakha hai */
+    .apply-btn-header { display: inline-flex; }
     .theme-toggle { width: 32px; height: 32px; }
     .hero-stats { flex-direction: column; gap: 1.5rem; }
     .hero-stat-item { border-left: 3px solid var(--accent); padding-left: 1rem; }
