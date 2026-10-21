@@ -199,14 +199,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* =========================================
-       10. FORM VALIDATION
+       10. FORM VALIDATION & WEB3FORMS SUBMIT
        ========================================= */
     const form = document.getElementById('inquiryForm');
     const formSuccess = document.getElementById('formSuccess');
     
     if (form) {
         form.addEventListener('submit', (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Pehle validation check karenge
             let isValid = true;
             
             const name = document.getElementById('name');
@@ -226,8 +226,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!consent.checked) { consentError.textContent = 'You must agree to be contacted.'; isValid = false; } else { consentError.textContent = ''; }
             
             if (isValid) {
-                form.style.display = 'none';
-                formSuccess.style.display = 'block';
+                // Agar validation pass ho jaye, toh form Web3Forms par submit karein
+                form.submit(); 
+                
+                // Submit hone ke baad success message dikhayen
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    formSuccess.style.display = 'block';
+                }, 500);
             }
         });
     }
