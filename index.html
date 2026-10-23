@@ -24,9 +24,6 @@
     
     <!-- Custom CSS for the Airport Board & Typewriter -->
     <style>
-        /* =========================================
-           RGB COLOR CHANGING BORDER ANIMATION
-           ========================================= */
         @keyframes rgbBorder {
             0% { border-color: #ff2a2a; box-shadow: 0 0 15px rgba(255, 42, 42, 0.4), inset 0 0 15px rgba(255, 42, 42, 0.1); }
             33% { border-color: #00e5ff; box-shadow: 0 0 15px rgba(0, 229, 255, 0.4), inset 0 0 15px rgba(0, 229, 255, 0.1); }
@@ -81,7 +78,6 @@
             text-shadow: 0 0 8px var(--neon-blue);
         }
 
-        /* Columns Layout */
         .board-grid, .data-row {
             display: grid;
             grid-template-columns: 80px 130px 1fr 150px;
@@ -110,7 +106,7 @@
             flex-direction: column;
             gap: 8px;
             padding-top: 10px;
-            padding-bottom: 80px; 
+            padding-bottom: 10px; 
         }
 
         .data-row {
@@ -151,32 +147,27 @@
         .dest-col { color: #ffffff; letter-spacing: 1px; z-index: 2; white-space: nowrap; text-align: center; }
         .status-col { letter-spacing: 1px; z-index: 2; text-align: center; }
 
-        /* UPDATED: FONT NORMAL, NO SHADOW */
         .status-active { 
             animation: activeColorCycle 3s infinite; 
-            text-shadow: none !important; /* Blur khatam */
-            font-weight: 400 !important; /* Non-bold */
+            text-shadow: none !important;
+            font-weight: 400 !important;
         }
         .status-non-active { 
             animation: nonActiveColorCycle 3s infinite; 
-            text-shadow: none !important; /* Blur khatam */
-            font-weight: 400 !important; /* Non-bold */
+            text-shadow: none !important;
+            font-weight: 400 !important;
         }
 
         @keyframes activeColorCycle {
-            0%, 100% { color: #eab308; } /* Yellow */
-            50% { color: #22c55e; }      /* Green */
+            0%, 100% { color: #eab308; }
+            50% { color: #22c55e; }
         }
 
         @keyframes nonActiveColorCycle {
-            0%, 100% { color: #ef4444; } /* Red */
-            50% { color: #ffffff; }      /* White */
+            0%, 100% { color: #ef4444; }
+            50% { color: #ffffff; }
         }
-        /* ========================================= */
 
-        /* =========================================
-           UPDATED: 12x12 SQUARE FAST LED (FIXED BORDERS)
-           ========================================= */
         .led-indicator {
             display: flex;
             gap: 8px; 
@@ -187,67 +178,53 @@
         .matrix-led {
             width: 26px; 
             height: 26px;
-            border-radius: 0px; /* Perfect Square */
+            border-radius: 0px;
             background-color: #050505;
             border: 1px solid #333;
-            
-            /* 12x12 Grid */
             display: grid;
             grid-template-columns: repeat(12, 1fr);
             grid-template-rows: repeat(12, 1fr);
-            
             padding: 3px; 
             gap: 1px;     
-            
             box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
             position: relative;
             overflow: hidden;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Dots Base - Perfect Square */
         .matrix-led .dot {
             width: 100%;
             height: 100%;
-            border-radius: 0px; /* Square Dots */
-            background-color: #444; /* Light grey so grid is visible on off state */
+            border-radius: 0px;
+            background-color: #444;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* Red Glow Border (Fixed, No Blink) */
         .matrix-led.red-glow {
             border-color: #ff2a2a;
             box-shadow: inset 0 0 3px rgba(255,42,42,0.3), 0 0 10px rgba(255,42,42,0.6);
         }
         
-        /* Green Glow Border (Fixed, No Blink) */
         .matrix-led.green-glow {
             border-color: #22c55e;
             box-shadow: inset 0 0 3px rgba(34,197,94,0.3), 0 0 10px rgba(34,197,94,0.6);
         }
 
-        /* Off State Border */
         .matrix-led.off {
-            border-color: #666; /* Visible border */
+            border-color: #666;
         }
         .matrix-led.off .dot {
-            background-color: #444; /* Visible grid dots */
+            background-color: #444;
         }
 
-        /* =========================================
-           ROW SPECIFIC ANIMATIONS (Dots Only)
-           ========================================= */
-
-        /* 1. Dono LEDs Fade In/Out (Skill Test) */
         .led-fade-both .matrix-led .dot {
             animation: fadeDotOnly 2.5s infinite ease-in-out; 
         }
         @keyframes fadeDotOnly {
             0%, 100% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
+            50% { background-color: #444; box-shadow: none; opacity: 0.4; }
         }
 
-        /* 2. Left Red, Right Green Alternate (EPS & Visa) */
         .led-alternate-red-green .matrix-led:nth-child(1) .dot {
             animation: alternateDotRedOnly 4s infinite; 
         }
@@ -256,16 +233,13 @@
         }
         @keyframes alternateDotRedOnly {
             0%, 49% { background-color: #ff2a2a; box-shadow: 0 0 4px #ff2a2a; opacity: 1; }
-            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
+            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; }
         }
         @keyframes alternateDotGreenOnly {
             0%, 49% { background-color: #22c55e; box-shadow: 0 0 4px #22c55e; opacity: 1; }
-            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; } /* Keeps grid visible */
+            50%, 100% { background-color: #444; box-shadow: none; opacity: 0.4; }
         }
 
-        /* =========================================
-           NEW: TYPEWRITER NOTICE BOARD STYLES (FIXED CURSOR)
-           ========================================= */
         .typewriter-notice-wrapper {
             max-width: 1000px;
             margin: 0 auto;
@@ -332,7 +306,6 @@
             flex: 1; 
         }
 
-        /* UPDATED: Cursor ko text ke sath inline rakhne ke liye */
         .cursor {
             display: inline-block;
             color: var(--neon-blue);
@@ -347,9 +320,6 @@
             50% { opacity: 0; }
         }
 
-        /* =========================================
-           PERFECT RESPONSIVE ALIGNMENT
-           ========================================= */
         @media (max-width: 768px) {
             .board-grid, .data-row {
                 grid-template-columns: 50px 90px 1fr 90px;
@@ -520,7 +490,6 @@
         </div>
         <div class="terminal-body">
             <span class="prompt">></span>
-            <!-- Yahan HTML se cursor hata kar JS mein handle kiya hai taake text ke sath chale -->
             <span id="typewriter-text"></span>
         </div>
     </div>
@@ -529,13 +498,11 @@
     <div class="airport-board-wrapper">
         <div class="status-board">
             
-            <!-- Header -->
             <div class="board-header">
                 <h1>Info of KOREA & OEC</h1>
                 <div class="dot-matrix-header">LIVE</div>
             </div>
 
-            <!-- Columns -->
             <div class="board-grid">
                 <div>Signal</div>
                 <div>Applicants</div>
@@ -543,43 +510,43 @@
                 <div>Status</div>
             </div>
 
-            <!-- Data Rows -->
+            <!-- PURANI ROWS (Fixed) -->
             <div class="board-body">
                 
-                <!-- Row 1: OEC (NON-ACTIVE) -->
+                <!-- Row 1: OEC -->
                 <div class="data-row">
                     <div class="led-indicator">
                         <div class="matrix-led red-glow"><div class="dot"></div></div>
                         <div class="matrix-led off"><div class="dot"></div></div>
                     </div>
-                    <div class="box number-col">0000</div>
+                    <div class="box number-col" id="db-oec-app">0000</div>
                     <div class="box dest-col">OEC BALLOTING</div>
-                    <div class="box status-col status-non-active">NON-ACTIVE</div>
+                    <div class="box status-col status-non-active" id="db-oec-status">NON-ACTIVE</div>
                 </div>
 
-                <!-- Row 2: SKILL TEST (ACTIVE - Dono Fade In/Out) -->
+                <!-- Row 2: SKILL TEST -->
                 <div class="data-row">
                     <div class="led-indicator led-fade-both">
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                     </div>
-                    <div class="box number-col">Pending</div>
-                    <div class="box dest-col">SKILL TEST PREP</div>
+                    <div class="box number-col" id="db-skill-app">Pending</div>
+                    <div class="box dest-col" id="db-skill-dest">SKILL TEST PREP</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
 
-                <!-- Row 3: EPS TOPIK (ACTIVE - Left Red, Right Green Alternate) -->
+                <!-- Row 3: EPS TOPIK -->
                 <div class="data-row">
                     <div class="led-indicator led-alternate-red-green">
                         <div class="matrix-led red-glow"><div class="dot"></div></div>
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                     </div>
-                    <div class="box number-col">0450</div>
+                    <div class="box number-col" id="db-eps-app">0450</div>
                     <div class="box dest-col">EPS TOPIK</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
 
-                <!-- Row 4: VISA GUIDANCE (ACTIVE - Left Red, Right Green Alternate) -->
+                <!-- Row 4: VISA GUIDANCE -->
                 <div class="data-row">
                     <div class="led-indicator led-alternate-red-green">
                         <div class="matrix-led red-glow"><div class="dot"></div></div>
@@ -590,33 +557,35 @@
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
 
-                <!-- =========================================
-                     NAYI ROWS ADD KI GAYI HAIN YAHAN
-                     ========================================= -->
-
-                <!-- Row 5: EPS MERIT (Dono Green Fade In/Out) -->
+                <!-- Row 5: EPS MERIT -->
                 <div class="data-row">
                     <div class="led-indicator led-fade-both">
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                     </div>
-                    <div class="box number-col">82.5</div>
+                    <div class="box number-col" id="db-merit">82.5</div>
                     <div class="box dest-col">EPS MERIT</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
 
-                <!-- Row 6: EPS TOTAL PASSERS (Dono Green Fade In/Out) -->
+                <!-- Row 6: EPS TOTAL PASSERS -->
                 <div class="data-row">
                     <div class="led-indicator led-fade-both">
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                         <div class="matrix-led green-glow"><div class="dot"></div></div>
                     </div>
-                    <div class="box number-col">590</div>
+                    <div class="box number-col" id="db-passers">590</div>
                     <div class="box dest-col">EPS TOTAL PASSERS</div>
                     <div class="box status-col status-active">ACTIVE</div>
                 </div>
 
             </div>
+
+            <!-- NAYI ROWS (Admin Panel Se Add Hongi) -->
+            <div class="board-body" id="custom-rows-container">
+                <!-- JavaScript yahan nayi rows add karega -->
+            </div>
+
         </div>
     </div>
 
@@ -874,6 +843,94 @@
         </div>
     </footer>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+        // AAPKA FIREBASE CONFIG
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOflQBHU_zmXZmgayqiGM4zokzJaTsqOo",
+            authDomain: "ok-web-dashboared.firebaseapp.com",
+            databaseURL: "https://ok-web-dashboared-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ok-web-dashboared",
+            storageBucket: "ok-web-dashboared.firebasestorage.app",
+            messagingSenderId: "926104626658",
+            appId: "1:926104626658:web:0b33a91fd31f06c146c5bb",
+            measurementId: "G-VKPQ5CHB5G"
+        };
+
+        // Firebase Initialize
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // 1. PURANI ROWS KA DATA UPDATE KARNE KE LIYE
+        database.ref('dashboard').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                if(document.getElementById('db-oec-app')) document.getElementById('db-oec-app').innerText = data.oec_app || '0000';
+                if(document.getElementById('db-oec-status')) document.getElementById('db-oec-status').innerText = data.oec_status || 'NON-ACTIVE';
+                if(document.getElementById('db-skill-app')) document.getElementById('db-skill-app').innerText = data.skill_app || 'Pending';
+                if(document.getElementById('db-skill-dest')) document.getElementById('db-skill-dest').innerText = data.skill_dest || 'SKILL TEST PREP';
+                if(document.getElementById('db-eps-app')) document.getElementById('db-eps-app').innerText = data.eps_app || '0450';
+                if(document.getElementById('db-merit')) document.getElementById('db-merit').innerText = data.merit || '82.5';
+                if(document.getElementById('db-passers')) document.getElementById('db-passers').innerText = data.passers || '590';
+            }
+        });
+
+        // 2. NAYI CUSTOM ROWS ADD KARNE KE LIYE (Dots Fix Ke Sath)
+        database.ref('new_rows').on('value', (snapshot) => {
+            const container = document.getElementById('custom-rows-container');
+            if (!container) return;
+            
+            container.innerHTML = ''; 
+            const data = snapshot.val();
+            
+            if (data) {
+                Object.keys(data).forEach((key) => {
+                    const row = data[key];
+                    let statusClass = row.status === 'ACTIVE' ? 'status-active' : 'status-non-active';
+                    
+                    // Yahan humne 144 dots generate karne ka code add kiya hai
+                    let dotsHtml = Array(144).fill('<div class="dot"></div>').join('');
+                    let ledHtml = '';
+                    
+                    if (row.signal === 'red-glow') {
+                        ledHtml = `<div class="matrix-led red-glow">${dotsHtml}</div><div class="matrix-led off">${dotsHtml}</div>`;
+                    } else if (row.signal === 'both-red-glow') {
+                        ledHtml = `<div class="led-indicator"><div class="matrix-led red-glow">${dotsHtml}</div><div class="matrix-led red-glow">${dotsHtml}</div></div>`;
+                    } else if (row.signal === 'green-glow') {
+                        ledHtml = `<div class="matrix-led green-glow">${dotsHtml}</div><div class="matrix-led green-glow">${dotsHtml}</div>`;
+                    } else if (row.signal === 'both-green-glow') {
+                        ledHtml = `<div class="led-indicator"><div class="matrix-led green-glow">${dotsHtml}</div><div class="matrix-led green-glow">${dotsHtml}</div></div>`;
+                    } else if (row.signal === 'led-fade-both') {
+                        ledHtml = `<div class="led-indicator led-fade-both"><div class="matrix-led green-glow">${dotsHtml}</div><div class="matrix-led green-glow">${dotsHtml}</div></div>`;
+                    } else if (row.signal === 'led-alternate-red-green') {
+                        ledHtml = `<div class="led-indicator led-alternate-red-green"><div class="matrix-led red-glow">${dotsHtml}</div><div class="matrix-led green-glow">${dotsHtml}</div></div>`;
+                    } else {
+                        ledHtml = `<div class="matrix-led off">${dotsHtml}</div><div class="matrix-led off">${dotsHtml}</div>`;
+                    }
+
+                    if (row.signal === 'red-glow' || row.signal === 'green-glow') {
+                        ledHtml = `<div class="led-indicator">${ledHtml}</div>`;
+                    }
+
+                    const rowHtml = `
+                        <div class="data-row">
+                            ${ledHtml}
+                            <div class="box number-col">${row.applicants}</div>
+                            <div class="box dest-col">${row.program}</div>
+                            <div class="box status-col ${statusClass}">${row.status}</div>
+                        </div>
+                    `;
+                    
+                    container.innerHTML += rowHtml;
+                });
+            }
+        });
+    </script>
+
+    <!-- Aapki purani script file -->
     <script src="script.js"></script>
 </body>
 </html>
